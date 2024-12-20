@@ -104,7 +104,7 @@ public class PerpetualVidUtil {
         res.setId(residentVidGetId);
         res.setVersion(newVersion);
         res.setResponsetime(DateUtils.getUTCCurrentDateTimeString());
-        if(response.getErrors()!=null && !response.getErrors().isEmpty()){
+        if(response.getErrors()!=null){
             res.setResponse(List.of());
             return res;
         }
