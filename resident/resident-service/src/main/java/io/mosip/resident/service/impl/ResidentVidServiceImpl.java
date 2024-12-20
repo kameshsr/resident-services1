@@ -202,7 +202,10 @@ public class ResidentVidServiceImpl implements ResidentVidService {
 		try {
 			if(Utility.isSecureSession()){
 				residentTransactionEntity = createResidentTransactionEntity(requestDto, identityDTO.getUIN());
-				validateVidFromSession(individualId, requestDto.getVidType(), identityDTO.getUIN());
+				IdType idType = uinVidValidator.getIndividualIdType(individualId);
+				if(idType.equals(IdType.VID)) {
+					validateVidFromSession(individualId, requestDto.getVidType(), identityDTO.getUIN());
+				}
 				if (residentTransactionEntity != null) {
 	    			eventId = residentTransactionEntity.getEventId();
 	    		}
