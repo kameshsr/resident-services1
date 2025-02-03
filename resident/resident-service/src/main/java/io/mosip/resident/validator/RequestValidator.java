@@ -384,6 +384,13 @@ public class RequestValidator {
 
 			throw new InvalidInputException("transactionId");
 		}
+
+		if(vidRequestDto instanceof VidRequestDtoV2){
+			if(requestDto.getRequest().getTransactionID()!=null){
+				audit.setAuditRequestDto(AuditEnum.INPUT_DOESNT_EXISTS);
+				throw new InvalidInputException(REQUEST);
+			}
+		}
 	}
 
 	public void validateAuthLockOrUnlockRequestV2(RequestWrapper<AuthLockOrUnLockRequestDtoV2> requestDto) {
