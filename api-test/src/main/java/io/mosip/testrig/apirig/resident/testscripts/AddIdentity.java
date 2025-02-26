@@ -109,9 +109,8 @@ public class AddIdentity extends ResidentUtil implements ITest {
 		inputJson = inputJson.replace("$UIN$", uin);
 		inputJson = inputJson.replace("$RID$", genRid);
 		String phoneNumber = "";
-		String email = testCaseName + "_" + BaseTestCase.runContext + "@mosip.net";
+		String email = testCaseName +"@mosip.net";
 		if (inputJson.contains("$PHONENUMBERFORIDENTITY$")) {
-			
 			if (!phoneSchemaRegex.isEmpty())
 				try {
 					phoneNumber = genStringAsperRegex(phoneSchemaRegex);
