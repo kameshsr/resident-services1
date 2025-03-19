@@ -1,6 +1,6 @@
 package io.mosip.testrig.apirig.resident.testrunner;
 
-import java.io.File;	
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -10,7 +10,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Level;
@@ -23,6 +25,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 
 import io.mosip.testrig.apirig.dataprovider.BiometricDataProvider;
 import io.mosip.testrig.apirig.dbaccess.DBManager;
+import io.mosip.testrig.apirig.report.EmailableReport;
 import io.mosip.testrig.apirig.resident.utils.ResidentConfigManager;
 import io.mosip.testrig.apirig.resident.utils.ResidentUtil;
 import io.mosip.testrig.apirig.testrunner.BaseTestCase;
@@ -32,7 +35,6 @@ import io.mosip.testrig.apirig.testrunner.OTPListener;
 import io.mosip.testrig.apirig.utils.AdminTestUtil;
 import io.mosip.testrig.apirig.utils.AuthTestsUtil;
 import io.mosip.testrig.apirig.utils.CertsUtil;
-import io.mosip.testrig.apirig.utils.DependencyResolver;
 import io.mosip.testrig.apirig.utils.GlobalConstants;
 import io.mosip.testrig.apirig.utils.GlobalMethods;
 import io.mosip.testrig.apirig.utils.JWKKeyUtil;
@@ -43,7 +45,6 @@ import io.mosip.testrig.apirig.utils.MispPartnerAndLicenseKeyGeneration;
 import io.mosip.testrig.apirig.utils.OutputValidationUtil;
 import io.mosip.testrig.apirig.utils.PartnerRegistration;
 import io.mosip.testrig.apirig.utils.SkipTestCaseHandler;
-import io.mosip.testrig.apirig.utils.Watchdog;
 
 /**
  * Class to initiate mosip api test execution
@@ -54,7 +55,6 @@ import io.mosip.testrig.apirig.utils.Watchdog;
 public class MosipTestRunner {
 	private static final Logger LOGGER = Logger.getLogger(MosipTestRunner.class);
 	private static String cachedPath = null;
-	private static String generateDependency;
 
 	public static String jarUrl = MosipTestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	public static List<String> languageList = new ArrayList<>();
@@ -66,7 +66,6 @@ public class MosipTestRunner {
 	 * @param arg
 	 */
 	public static void main(String[] arg) {
-		Watchdog watchdog = null;
 
 		try {
 			LOGGER.info("** ------------- API Test Rig Run Started --------------------------------------------- **");
@@ -81,28 +80,13 @@ public class MosipTestRunner {
 			}
 			AdminTestUtil.init();
 			ResidentConfigManager.init();
-			
-			// Read timeout from properties, fallback to 120 if not set which is 2 hours with buffer timing
-			String timeoutStr = ResidentConfigManager.getproperty("watchdogTimeoutMinutes");
-			long timeoutMinutes = 120; // default
-			if (timeoutStr != null && !timeoutStr.isBlank()) {
-				try {
-					timeoutMinutes = Long.parseLong(timeoutStr);
-				} catch (NumberFormatException e) {
-					LOGGER.warn("Invalid watchdogTimeoutMinutes property: " + timeoutStr + ", using default: 120");
-				}
-			}
-			watchdog = new Watchdog(timeoutMinutes * 60 * 1000L);
-			watchdog.start();
-			
 			suiteSetup(getRunType());
 			SkipTestCaseHandler.loadTestcaseToBeSkippedList("testCaseSkippedList.txt");
 			GlobalMethods.setModuleNameAndReCompilePattern(ResidentConfigManager.getproperty("moduleNamePattern"));
-			GlobalMethods.reportCaptchaStatus(GlobalConstants.CAPTCHA_ENABLED, false);
 			setLogLevels();
 
 			HealthChecker healthcheck = new HealthChecker();
-			healthcheck.setCurrentRunningModule(GlobalConstants.RESIDENT);
+			healthcheck.setCurrentRunningModule(BaseTestCase.currentModule);
 			Thread trigger = new Thread(healthcheck);
 			trigger.start();
 			
@@ -116,49 +100,20 @@ public class MosipTestRunner {
 
 			// Generate device certificates to be consumed by Mock-MDS
 			PartnerRegistration.deleteCertificates();
+			AdminTestUtil.createAndPublishPolicy();
+			AdminTestUtil.createEditAndPublishPolicy();
 			PartnerRegistration.deviceGeneration();
 
 			BiometricDataProvider.generateBiometricTestData("Registration");
-			
-			String testCasesToExecuteString = ResidentConfigManager.getproperty("testCasesToExecute");
-			
-			generateDependency = ResidentConfigManager.getproperty("generateDependencyJson");
 
-			if (!"yes".equalsIgnoreCase(generateDependency)) {
-
-				String testCasesToExecute = ResidentConfigManager.getproperty("testCasesToExecute");
-				LOGGER.info("Testcases to execute as per config: " + testCasesToExecute);
-
-				if (testCasesToExecute != null && !testCasesToExecute.isBlank()) {
-					DependencyResolver
-							.loadDependencies(getGlobalResourcePath() + "/config/testCaseInterDependency.json");
-
-					ResidentUtil.testCasesInRunScope = DependencyResolver.getDependencies(testCasesToExecute);
-				}
-			}
-			
 			startTestRunner();
 		} catch (Exception e) {
 			LOGGER.error("Exception " + e.getMessage());
 		}
-		
-		ResidentUtil.dbCleanUp();
-		KeycloakUserManager.removeUser();
-		KeycloakUserManager.closeKeycloakInstance();
 
 		OTPListener.bTerminate = true;
 
 		HealthChecker.bTerminate = true;
-		
-		if ("yes".equalsIgnoreCase(generateDependency)) {
-			LOGGER.info("Generating test case inter-dependencies");
-			AdminTestUtil.generateTestCaseInterDependencies(BaseTestCase.getTestCaseInterDependencyPath());
-		} else {
-			LOGGER.info("Skipping dependency generation");
-		}
-		
-		// Stop watchdog since task completed successfully
-		watchdog.stop();
 
 		System.exit(0);
 

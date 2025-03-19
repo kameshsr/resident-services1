@@ -709,7 +709,7 @@ AddIdentity:
 
    Resident_AddIdentity_withInValid_DOB_Neg:
       endPoint: /idrepository/v1/identity/
-      uniqueIdentifier: Dependent_Idrepo
+      uniqueIdentifier: Dependent_Idrepo_AddIdentity_24
       description: Add identity with an invalid DOB
       role: testrig
       restMethod: post

@@ -8,10 +8,12 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqidResult
       input: '{
-        "requestId": "$ID:RequestCredentials_euin_All_Valid_Smoke_sid_requestId$"
+        "requestId": "$ID:RequestCredentials_euin_All_Valid_Smoke_sid_requestId$",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
-        "Content-Type": "application/pdf"
+        "Content-Type": "application/pdf",
+        "filename": "$IGNORE$"
     }'
    Resident_CredentialsStatus_All_Valid_Smoke_QrCode:
       endPoint: /resident/v1/req/card/{requestId}
@@ -22,10 +24,12 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqidResult
       input: '{
-        "requestId": "$ID:RequestCredentials_Qrcode_All_Valid_Smoke_sid_requestId$"
+        "requestId": "$ID:RequestCredentials_Qrcode_All_Valid_Smoke_sid_requestId$",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
-        "Content-Type": "application/pdf"
+        "Content-Type": "application/pdf",
+        "filename": "$IGNORE$"
     }'
    Resident_CredentialsStatus_All_Valid_Smoke_Reprint:
       endPoint: /resident/v1/req/card/{requestId}
@@ -36,10 +40,12 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqidResult
       input: '{
-        "requestId": "$ID:RequestCredentials_printUIN_All_Valid_Smoke_sid_requestId$"
+        "requestId": "$ID:RequestCredentials_printUIN_All_Valid_Smoke_sid_requestId$",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
-        "Content-Type": "application/pdf"
+        "Content-Type": "application/pdf",
+        "filename": "$IGNORE$"
     }'
    Resident_CredentialsStatus_VID_All_Valid_Smoke_euin:
       endPoint: /resident/v1/req/card/{requestId}
@@ -50,10 +56,12 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqidResult
       input: '{
-        "requestId": "$ID:RequestCredentials_euin_VID_All_Valid_Smoke_sid_requestId$"
+        "requestId": "$ID:RequestCredentials_euin_VID_All_Valid_Smoke_sid_requestId$",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
-        "Content-Type": "application/pdf"
+        "Content-Type": "application/pdf",
+        "filename": "$IGNORE$"
     }'
    Resident_CredentialsStatus_VID_All_Valid_Smoke_Reprint:
       endPoint: /resident/v1/req/card/{requestId}
@@ -64,10 +72,12 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqidResult
       input: '{
-        "requestId": "$ID:RequestCredentials_reprint_VID_All_Valid_Smoke_sid_requestId$"
+        "requestId": "$ID:RequestCredentials_reprint_VID_All_Valid_Smoke_sid_requestId$",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
-        "Content-Type": "application/pdf"
+        "Content-Type": "application/pdf",
+        "filename": "$IGNORE$"
     }'
    Resident_CredentialsStatus_VID_All_Valid_Smoke_QrCode:
       endPoint: /resident/v1/req/card/{requestId}
@@ -78,12 +88,14 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqidResult
       input: '{
-        "requestId": "$ID:RequestCredentials_Qrcode_VID_All_Valid_Smoke_sid_requestId$"
+        "requestId": "$ID:RequestCredentials_Qrcode_VID_All_Valid_Smoke_sid_requestId$",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
-        "Content-Type": "application/pdf"
+        "Content-Type": "application/pdf",
+        "filename": "$IGNORE$"
     }'
-   Resident_CredentialsStatus_Invalid_requestId_Neg:
+   Resident_CredentialsStatus_Invalid_requestId:
       endPoint: /resident/v1/req/card/{requestId}
       uniqueIdentifier: TC_Resident_DownloadCredential_07
       description: Check the credential status using an invalid requestId
@@ -92,16 +104,38 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/error
       input: '{
-        "requestId": "adfvd"
+        "requestId": "adfvd",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
        "errors": [
     {
-      "errorCode": "RES-SER-29"
+      "errorCode": "RES-SER-29",
+      "message": "$IGNORE$"
     }
   ]
     }'
-   Resident_CredentialsStatus_Empty_requestId_Neg:
+   Resident_CredentialsStatus_Invalid_requesttime:
+      endPoint: /resident/v1/req/card/{requestId}
+      uniqueIdentifier: TC_Resident_DownloadCredential_08
+      description: Check the credential status using an invalid requesttime
+      role: resident
+      restMethod: get
+      inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
+      outputTemplate: resident/error
+      input: '{
+        "requestId": "adfvd",
+        "requesttime": "33"
+    }'
+      output: ' {
+       "errors": [
+    {
+      "errorCode": "RES-SER-29",
+      "message": "$IGNORE$"
+    }
+  ]
+    }'
+   Resident_CredentialsStatus_Empty_requestId:
       endPoint: /resident/v1/req/card/{requestId}
       uniqueIdentifier: TC_Resident_DownloadCredential_09
       description: Check the credential status using an empty requestId
@@ -110,12 +144,34 @@ DownloadCredential:
       inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
       outputTemplate: resident/error
       input: '{
-        "requestId": " "
+        "requestId": "",
+        "requesttime": "$TIMESTAMP$"
     }'
       output: ' {
        "errors": [
     {
-      "errorCode": "RES-SER-29"
+      "errorCode": "RES-SER-29",
+      "message": "$IGNORE$"
+    }
+  ]
+    }'
+   Resident_CredentialsStatus_Empty_requesttime:
+      endPoint: /resident/v1/req/card/{requestId}
+      uniqueIdentifier: TC_Resident_DownloadCredential_10
+      description: Check the credential status using an empty requesttime
+      role: resident
+      restMethod: get
+      inputTemplate: resident/CredentialIssuance/DownloadWithReqid/downloadwithreqid
+      outputTemplate: resident/error
+      input: '{
+        "requestId": "$ID:RequestCredentials_euin_All_Valid_Smoke_sid_requestId$",
+        "requesttime": "33"
+    }'
+      output: ' {
+       "errors": [
+    {
+      "errorCode": "RES-SER-29",
+      "message": "$IGNORE$"
     }
   ]
     }'
