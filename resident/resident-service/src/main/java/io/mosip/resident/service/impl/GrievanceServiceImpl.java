@@ -66,11 +66,10 @@ public class GrievanceServiceImpl implements GrievanceService {
             response.put(TICKET_ID, ticketId);
             responseWrapper.setResponse(response);
         } catch (ApisResourceAccessException e) {
-        	logger.error("%s - %s", ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorMessage(), e.getMessage());
-            throw new ApisResourceAccessException(ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorCode(), e.getMessage(), e);
-        } catch (NoSuchAlgorithmException | java.security.NoSuchAlgorithmException e) {
-            logger.error("%s - %s", ResidentErrorCode.NO_SUCH_ALGORITHM_EXCEPTION.getErrorMessage(), e.getMessage());
-            throw new NoSuchAlgorithmException(ResidentErrorCode.NO_SUCH_ALGORITHM_EXCEPTION.getErrorCode(), e.getMessage(), e);
+        	logger.error("%s - %s", ResidentErrorCode.GRIEVANCE_TICKET_GENERATION_FAILED.getErrorMessage(), e.getMessage());
+            throw new ApisResourceAccessException(ResidentErrorCode.GRIEVANCE_TICKET_GENERATION_FAILED.getErrorCode(), e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
         logger.debug("GrievanceServiceImpl::getGrievanceTicket()::exit");
         return responseWrapper;
