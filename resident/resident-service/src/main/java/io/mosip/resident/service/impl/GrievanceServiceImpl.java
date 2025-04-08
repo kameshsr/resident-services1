@@ -2,6 +2,7 @@ package io.mosip.resident.service.impl;
 
 import static io.mosip.resident.constant.RegistrationConstants.SUCCESS;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -75,7 +76,7 @@ public class GrievanceServiceImpl implements GrievanceService {
         return responseWrapper;
     }
 
-    private void insertDataInGrievanceTable(String ticketId, MainRequestDTO<GrievanceRequestDTO> grievanceRequestDTOMainRequestDTO) throws NoSuchAlgorithmException, java.security.NoSuchAlgorithmException {
+    private void insertDataInGrievanceTable(String ticketId, MainRequestDTO<GrievanceRequestDTO> grievanceRequestDTOMainRequestDTO) throws NoSuchAlgorithmException {
         ResidentGrievanceEntity residentGrievanceEntity = new ResidentGrievanceEntity();
         residentGrievanceEntity.setId(ticketId);
         residentGrievanceEntity.setEventId(grievanceRequestDTOMainRequestDTO.getRequest().getEventId());

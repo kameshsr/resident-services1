@@ -607,9 +607,6 @@ public class Utility {
 	}
 
 	public String getRefIdHash(String value) throws NoSuchAlgorithmException {
-		if(value == null || value.isEmpty()) {
-			return null;
-		}
 		return HMACUtils2.digestAsPlainText(value.getBytes());
 	}
 
