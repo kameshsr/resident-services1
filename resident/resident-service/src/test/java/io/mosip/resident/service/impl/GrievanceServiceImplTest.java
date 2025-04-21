@@ -26,7 +26,7 @@ import java.security.NoSuchAlgorithmException;
 
 /**
  * This class is used to create service class test  for grievance API.
- * @Author Kamesh Shekhar Prasad
+ * @author Kamesh Shekhar Prasad
  */
 @RunWith(MockitoJUnitRunner.class)
 @RefreshScope
