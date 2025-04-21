@@ -69,7 +69,8 @@ public class GrievanceServiceImpl implements GrievanceService {
         	logger.error("%s - %s", ResidentErrorCode.GRIEVANCE_TICKET_GENERATION_FAILED.getErrorMessage(), e.getMessage());
             throw new ApisResourceAccessException(ResidentErrorCode.GRIEVANCE_TICKET_GENERATION_FAILED.getErrorCode(), e);
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+            logger.error("%s - %s", ResidentErrorCode.GRIEVANCE_TICKET_GENERATION_FAILED.getErrorMessage(), e.getMessage());
+            throw new NoSuchAlgorithmException(ResidentErrorCode.GRIEVANCE_TICKET_GENERATION_FAILED.getErrorCode(), e);
         }
         logger.debug("GrievanceServiceImpl::getGrievanceTicket()::exit");
         return responseWrapper;
