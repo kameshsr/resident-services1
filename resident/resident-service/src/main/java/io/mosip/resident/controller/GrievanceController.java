@@ -59,7 +59,7 @@ public class GrievanceController {
     @PostMapping("/grievance/ticket")
 	public ResponseWrapper<Object> grievanceTicket(
 			@Validated @RequestBody MainRequestDTO<GrievanceRequestDTO> grievanceRequestDTOMainRequestDTO)
-            throws ResidentServiceCheckedException, ApisResourceAccessException, IOException, NoSuchAlgorithmException {
+            throws ResidentServiceCheckedException, ApisResourceAccessException, IOException, NoSuchAlgorithmException, io.mosip.resident.exception.NoSuchAlgorithmException {
 		logger.debug("GrievanceController::grievanceTicket()::entry");
 		ResponseWrapper<Object> response = null;
 		try {
