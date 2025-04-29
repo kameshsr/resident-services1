@@ -80,8 +80,6 @@ public class Utilities {
 	/** The Constant FILE_SEPARATOR. */
 	public static final String FILE_SEPARATOR = "\\";
 
-	private static final long SIZE_THRESHOLD = 10 * 1024 * 1024; // 10MB threshold
-
 	@Value("${provider.packetwriter.resident}")
 	private String provider;
 
