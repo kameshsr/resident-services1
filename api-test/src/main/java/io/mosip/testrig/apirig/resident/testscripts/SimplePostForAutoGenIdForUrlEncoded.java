@@ -77,6 +77,7 @@ public class SimplePostForAutoGenIdForUrlEncoded extends ResidentUtil implements
 	 * @throws AuthenticationTestException
 	 * @throws AdminTestException
 	 * @throws NoSuchAlgorithmException
+	 * @throws SecurityXSSException 
 	 */
 	@Test(dataProvider = "testcaselist")
 	public void test(TestCaseDTO testCaseDTO)

@@ -81,6 +81,7 @@ public class SimplePostForAutoGenId extends ResidentUtil implements ITest {
 	 * @throws AuthenticationTestException
 	 * @throws AdminTestException
 	 * @throws NoSuchAlgorithmException
+	 * @throws SecurityXSSException 
 	 */
 	@Test(dataProvider = "testcaselist")
 	public void test(TestCaseDTO testCaseDTO)
