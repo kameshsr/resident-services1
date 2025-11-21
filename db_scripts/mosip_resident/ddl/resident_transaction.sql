@@ -108,5 +108,8 @@ CREATE INDEX idx_resident_transaction_ref_id ON resident.resident_transaction (r
 CREATE INDEX idx_resident_transaction_read_status ON resident.resident_transaction (read_status);
 
 GRANT SELECT, INSERT, REFERENCES, UPDATE, DELETE
-    ON resident.resident_transaction
-    TO :dbuname;
+   ON resident.resident_transaction
+   TO residentuser;
+
+CREATE INDEX idx_resident_transaction_aid_crdtime_desc
+       ON resident.resident_transaction (aid, cr_dtimes DESC);
