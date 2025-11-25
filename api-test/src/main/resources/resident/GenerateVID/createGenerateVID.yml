@@ -28,7 +28,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_Generate_Perpetual_VID_Valid_Smoke_send_otp_with_max_email_character_Pos:
@@ -60,7 +62,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -94,11 +98,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -131,7 +138,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -164,7 +173,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -197,7 +208,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -230,7 +243,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -263,7 +278,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_All_Valid_Smoke_Temp_VID_sid:
@@ -295,7 +312,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -328,7 +347,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -361,7 +382,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -394,7 +417,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -427,7 +452,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -461,11 +488,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_missing_version_Neg:
@@ -498,11 +528,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -523,7 +556,7 @@ GenerateVID:
         "id": "mosip.resident.vid",
         "version": "v1",
         "vidType": "Perpetual",
-        "otp": "$ID:AddIdentity_Positive_smoke_Pos_EMAIL$",
+        "otp": "$ID:AddIdentity_ValidParam_smoke_Pos_EMAIL$",
         "sendOtp":{
     "transactionID": "$TRANSACTIONID$",
     "requestTime": "$TIMESTAMP$",
@@ -536,11 +569,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_missing_individualId_Neg:
@@ -560,7 +596,7 @@ GenerateVID:
         "id": "mosip.resident.vid",
         "version": "v1",
         "vidType": "Perpetual",
-        "otp": "$ID:AddIdentity_Positive_PEXP_smoke_EMAIL$",
+        "otp": "$ID:AddIdentity_ValidParam_smoke_Pos_EMAIL$",
         "sendOtp":{
     "transactionID": "$TRANSACTIONID$",
     "requestTime": "$TIMESTAMP$",
@@ -573,11 +609,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_invalid_Timestamp_Neg:
@@ -610,11 +649,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -649,11 +691,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_MISSING_OTP_Neg:
@@ -686,11 +731,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Invalid_OTP_Temp_VID_Neg:
@@ -723,11 +771,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -761,11 +812,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -799,11 +853,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_missing_Id_Neg:
@@ -836,11 +893,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_invalid_Id_Neg:
@@ -873,11 +933,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_InValid_transactionId_Temp_VID:
@@ -910,11 +973,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_TransactionMismatch_Neg:
@@ -947,11 +1013,14 @@ GenerateVID:
       output: '{
    "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -985,11 +1054,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1023,11 +1095,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1061,11 +1136,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1099,11 +1177,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1137,11 +1218,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1175,11 +1259,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1213,11 +1300,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1251,11 +1341,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1289,11 +1382,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-422"
+      "errorCode": "RES-SER-422",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1326,7 +1422,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1359,7 +1457,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1392,7 +1492,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1425,7 +1527,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1458,7 +1562,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1491,7 +1597,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1525,11 +1633,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1563,11 +1674,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1601,11 +1715,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1639,11 +1756,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1677,11 +1797,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-406"
+      "errorCode": "RES-SER-406",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1715,11 +1838,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1753,11 +1879,14 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1790,7 +1919,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1823,7 +1954,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1856,6 +1989,7 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
+        "maskedMobile": "$IGNORE$",
         "sendOtpResTemplate":"resident/SendOTP/createSendOTPResultForPhone"
     }
 }'
@@ -1889,7 +2023,8 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResultForEmail"
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResultForEmail",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1923,13 +2058,15 @@ GenerateVID:
       output: '{
   "errors": [
     {
-      "errorCode": "RES-SER-410"
+      "errorCode": "RES-SER-410",
+      "message": "$IGNORE$"
     }
   ],
   "sendOtpResp":{
     "errors": [
     {
-      "errorCode": "IDA-OTA-008"
+      "errorCode": "IDA-OTA-008",
+      "message": "$IGNORE$"
     }
   ],
         "sendOtpResTemplate":"resident/error"
@@ -1964,7 +2101,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -1997,7 +2136,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2030,7 +2171,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2063,7 +2206,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2096,7 +2241,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2129,7 +2276,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2162,7 +2311,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_1_Esignet_Integ_Valid_sid:
@@ -2194,7 +2345,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_2_Esignet_Integ_Valid_sid:
@@ -2226,7 +2379,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_3_Esignet_Integ_Valid_sid:
@@ -2258,7 +2413,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_4_Esignet_Integ_Valid_sid:
@@ -2290,7 +2447,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Onetimeuse_Esignet_Integ_Valid_sid:
@@ -2322,7 +2481,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2355,7 +2516,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2388,7 +2551,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2421,7 +2586,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2454,7 +2621,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_1_ForEotp_Scen_Valid_Smoke_sid:
@@ -2486,7 +2655,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_2_ForEotp_Scen_Valid_Smoke_sid:
@@ -2518,7 +2689,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_3_ForEotp_Scen_Valid_Smoke_sid:
@@ -2550,7 +2723,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Temporary_4_ForEotp_Scen_Valid_Smoke_sid:
@@ -2582,7 +2757,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
    Resident_GenerateVID_Onetimeuse_ForEotp_Scen_Valid_Smoke_sid:
@@ -2614,7 +2791,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2647,7 +2826,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2680,7 +2861,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2713,7 +2896,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -2746,180 +2931,10 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
-}'
-
-   Resident_Generate_Temporary_VID_TWO_Valid_sid:
-      endPoint: /resident/v1/vid
-      uniqueIdentifier: TC_Resident_GenerateVID_80
-      description: Generate second temporary VID using valid inputs
-      role: resident
-      restMethod: post
-      checkErrorsOnlyInResponse: true
-      inputTemplate: resident/GenerateVID/createGenerateVID
-      outputTemplate: resident/GenerateVID/createGenerateVIDResult
-      input: '{
-        "transactionID": "$TRANSACTIONID$",
-        "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-        "individualIdType": "UIN",
-        "requesttime": "$TIMESTAMP$",
-        "id": "mosip.resident.vid",
-        "version": "v1",
-        "vidType": "Temporary",
-        "otp": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_EMAIL$",
-        "sendOtp":{
-    "transactionID": "$TRANSACTIONID$",
-    "requestTime": "$TIMESTAMP$",
-    "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-    "individualIdType": "UIN",
-    "sendOtpReqTemplate": "resident/SendOTP/createSendOTP",
-    "sendOtpEndPoint": "/resident/v1/req/otp"
-    }
-    }'
-      output: '{
-  "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
-    }
-}'
-
-   Resident_Generate_Temporary_VID_Three_Valid_sid:
-      endPoint: /resident/v1/vid
-      uniqueIdentifier: TC_Resident_GenerateVID_81
-      description: Generate third temporary VID using valid inputs
-      role: resident
-      restMethod: post
-      checkErrorsOnlyInResponse: true
-      inputTemplate: resident/GenerateVID/createGenerateVID
-      outputTemplate: resident/GenerateVID/createGenerateVIDResult
-      input: '{
-        "transactionID": "$TRANSACTIONID$",
-        "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-        "individualIdType": "UIN",
-        "requesttime": "$TIMESTAMP$",
-        "id": "mosip.resident.vid",
-        "version": "v1",
-        "vidType": "Temporary",
-        "otp": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_EMAIL$",
-        "sendOtp":{
-    "transactionID": "$TRANSACTIONID$",
-    "requestTime": "$TIMESTAMP$",
-    "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-    "individualIdType": "UIN",
-    "sendOtpReqTemplate": "resident/SendOTP/createSendOTP",
-    "sendOtpEndPoint": "/resident/v1/req/otp"
-    }
-    }'
-      output: '{
-  "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
-    }
-}'
-
-   Resident_Generate_Temporary_VID_FOUR_Valid_sid:
-      endPoint: /resident/v1/vid
-      uniqueIdentifier: TC_Resident_GenerateVID_82
-      description: Generate fourth temporary VID using valid inputs
-      role: resident
-      restMethod: post
-      checkErrorsOnlyInResponse: true
-      inputTemplate: resident/GenerateVID/createGenerateVID
-      outputTemplate: resident/GenerateVID/createGenerateVIDResult
-      input: '{
-        "transactionID": "$TRANSACTIONID$",
-        "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-        "individualIdType": "UIN",
-        "requesttime": "$TIMESTAMP$",
-        "id": "mosip.resident.vid",
-        "version": "v1",
-        "vidType": "Temporary",
-        "otp": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_EMAIL$",
-        "sendOtp":{
-    "transactionID": "$TRANSACTIONID$",
-    "requestTime": "$TIMESTAMP$",
-    "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-    "individualIdType": "UIN",
-    "sendOtpReqTemplate": "resident/SendOTP/createSendOTP",
-    "sendOtpEndPoint": "/resident/v1/req/otp"
-    }
-    }'
-      output: '{
-  "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
-    }
-}'
-
-   Resident_Generate_Temporary_VID_FIVE_Valid_sid:
-      endPoint: /resident/v1/vid
-      uniqueIdentifier: TC_Resident_GenerateVID_83
-      description: Generate fifth temporary VID using valid inputs
-      role: resident
-      restMethod: post
-      checkErrorsOnlyInResponse: true
-      inputTemplate: resident/GenerateVID/createGenerateVID
-      outputTemplate: resident/GenerateVID/createGenerateVIDResult
-      input: '{
-        "transactionID": "$TRANSACTIONID$",
-        "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-        "individualIdType": "UIN",
-        "requesttime": "$TIMESTAMP$",
-        "id": "mosip.resident.vid",
-        "version": "v1",
-        "vidType": "Temporary",
-        "otp": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_EMAIL$",
-        "sendOtp":{
-    "transactionID": "$TRANSACTIONID$",
-    "requestTime": "$TIMESTAMP$",
-    "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-    "individualIdType": "UIN",
-    "sendOtpReqTemplate": "resident/SendOTP/createSendOTP",
-    "sendOtpEndPoint": "/resident/v1/req/otp"
-    }
-    }'
-      output: '{
-  "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
-    }
-}'
-
-   Resident_Generate_Temporary_VID_SIX_Valid_sid:
-      endPoint: /resident/v1/vid
-      uniqueIdentifier: TC_Resident_GenerateVID_84
-      description: Generate six temporary VID using valid inputs
-      role: resident
-      checkErrorsOnlyInResponse: true
-      restMethod: post
-      inputTemplate: resident/GenerateVID/createGenerateVID
-      outputTemplate: resident/error
-      input: '{
-        "transactionID": "$TRANSACTIONID$",
-        "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-        "individualIdType": "UIN",
-        "requesttime": "$TIMESTAMP$",
-        "id": "mosip.resident.vid",
-        "version": "v1",
-        "vidType": "Temporary",
-        "otp": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_EMAIL$",
-        "sendOtp":{
-    "transactionID": "$TRANSACTIONID$",
-    "requestTime": "$TIMESTAMP$",
-    "individualId": "$ID:AddIdentity_withValidParameters_To_Genrate_VID_Six_smoke_Pos_UIN$",
-    "individualIdType": "UIN",
-    "sendOtpReqTemplate": "resident/SendOTP/createSendOTP",
-    "sendOtpEndPoint": "/resident/v1/req/otp"
-    }
-    }'
-      output: '{
-  "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
-    },    
-    "errors": [
-    {
-      "errorCode": "RES-SER-405"
-    }
-  ]
-    
-    
 }'
 
    Resident_Generate_Perpetual_VID_Valid_First_sid:
@@ -2951,7 +2966,9 @@ GenerateVID:
     }'
       output: '{
       "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
       
  
@@ -2986,7 +3003,9 @@ GenerateVID:
     }'
       output: '{
       "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
     
 }'
@@ -3020,7 +3039,9 @@ GenerateVID:
     }'
       output: '{
       "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
     
 }'
@@ -3054,7 +3075,9 @@ GenerateVID:
     }'
       output: '{
       "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
     
 }'
@@ -3088,7 +3111,9 @@ GenerateVID:
     }'
       output: '{
       "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
     
 }'
@@ -3122,7 +3147,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -3155,7 +3182,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -3188,7 +3217,9 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
 
@@ -3221,6 +3252,8 @@ GenerateVID:
     }'
       output: '{
   "sendOtpResp":{
-        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult"
+        "maskedMobile": "$IGNORE$",
+        "sendOtpResTemplate":"resident/SendOTP/createSendOTPResult",
+        "maskedEmail": "$IGNORE$"
     }
 }'
