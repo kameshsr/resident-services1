@@ -12,6 +12,7 @@ import io.mosip.resident.exception.ApisResourceAccessException;
 import io.mosip.resident.exception.ResidentServiceCheckedException;
 import io.mosip.resident.exception.ResidentServiceException;
 import io.mosip.resident.handler.service.ResidentConfigService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
@@ -244,13 +245,13 @@ public class IdentityUtil {
 	}
 
 
-	@CacheEvict(value = "getNameValueFromIdentityMapping", allEntries = true)
-	@Scheduled(fixedRateString = "${resident.cache.expiry.time.millisec.getNameValueFromIdentityMapping}")
-	public void emptyGetNameValueFromIdentityMappingCache() {
-		logger.info("Emptying getNameValueFromIdentityMapping cache");
-	}
+    @CacheEvict(value = "getNameValueFromIdentityMapping", allEntries = true)
+    @Scheduled(fixedRateString = "${resident.cache.expiry.time.millisec.getNameValueFromIdentityMapping}")
+    public void emptyGetNameValueFromIdentityMappingCache() {
+        logger.info("Emptying getNameValueFromIdentityMapping cache");
+    }
 
-	@Cacheable(value = "getNameValueFromIdentityMapping")
+    @Cacheable(value = "getNameValueFromIdentityMapping")
 	public List<String> getNameValueFromIdentityMapping() throws ResidentServiceCheckedException {
 		if (Objects.isNull(nameValueList)) {
 			try {
