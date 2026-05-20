@@ -7,11 +7,11 @@
     <parent>
         <groupId>io.mosip.resident</groupId>
         <artifactId>resident-parent</artifactId>
-        <version>1.3.0</version>
+        <version>1.3.1-SNAPSHOT</version>
     </parent>
     <artifactId>resident-service</artifactId>
     <name>resident-service</name>
-    <version>1.3.0</version>
+    <version>1.3.1-SNAPSHOT</version>
     <properties>
         <commons.packet.manager.version>1.3.0</commons.packet.manager.version>
         <kernel.core.version>1.3.0</kernel.core.version>
@@ -70,7 +70,7 @@
         <dependency>
             <groupId>io.mosip.kernel</groupId>
             <artifactId>kernel-ref-idobjectvalidator</artifactId>
-            <version>1.3.0</version>
+            <version>1.3.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.mosip.kernel</groupId>
