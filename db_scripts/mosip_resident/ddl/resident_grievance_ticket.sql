@@ -12,23 +12,23 @@
 
 -- This Table is used to save the  resident_grievance_ticket table values.
 CREATE TABLE resident.resident_grievance_ticket(
-    id VARCHAR(64) NOT NULL,
-    eventId VARCHAR(64) NOT NULL,
-    name VARCHAR(256) NOT NULL,
-    emailId VARCHAR(128),
-    alternateEmailId VARCHAR(128),
-    phoneNo VARCHAR(64),
-    alternatePhoneNo VARCHAR(64),
-	message character varying(1024) NOT NULL,
-	hasAttachment boolean NOT NULL DEFAULT false,
-	status character varying(64) NOT NULL,
-    cr_by character varying(256) NOT NULL,
-    cr_dtimes timestamp NOT NULL,
-    upd_by character varying(256),
-    upd_dtimes timestamp,
-    is_deleted boolean NOT NULL DEFAULT false,
-    del_dtimes timestamp,
-    CONSTRAINT pk_resgrev_id PRIMARY KEY (id)
+                                                   id VARCHAR(64) NOT NULL,
+                                                   eventId VARCHAR(64) NOT NULL,
+                                                   name VARCHAR(256) NOT NULL,
+                                                   emailId VARCHAR(128),
+                                                   alternateEmailId VARCHAR(128),
+                                                   phoneNo VARCHAR(64),
+                                                   alternatePhoneNo VARCHAR(64),
+                                                   message character varying(1024) NOT NULL,
+                                                   hasAttachment boolean NOT NULL DEFAULT false,
+                                                   status character varying(64) NOT NULL,
+                                                   cr_by character varying(256) NOT NULL,
+                                                   cr_dtimes timestamp NOT NULL,
+                                                   upd_by character varying(256),
+                                                   upd_dtimes timestamp,
+                                                   is_deleted boolean NOT NULL DEFAULT false,
+                                                   del_dtimes timestamp,
+                                                   CONSTRAINT pk_resgrev_id PRIMARY KEY (id)
 );
 
 COMMENT ON TABLE resident.resident_grievance_ticket IS 'This Table is used to save the  resident_grievance_ticket table values.';
@@ -49,5 +49,5 @@ COMMENT ON COLUMN resident.resident_grievance_ticket.del_dtimes IS 'Deleted time
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 GRANT SELECT, INSERT, REFERENCES, UPDATE, DELETE
-   ON resident.resident_grievance_ticket
-   TO residentuser;
+    ON resident.resident_grievance_ticket
+    TO :dbuname;
