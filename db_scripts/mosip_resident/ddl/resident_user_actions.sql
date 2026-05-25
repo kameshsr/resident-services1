@@ -13,9 +13,9 @@
 -- This Table is used to save the  user actions for the user actions table.
 
 CREATE TABLE resident.resident_user_actions(
-    ida_token character varying(128) NOT NULL,
-    last_bell_notif_click_dtimes timestamp,
-    CONSTRAINT pk_ida_token PRIMARY KEY (ida_token)
+                                               ida_token character varying(128) NOT NULL,
+                                               last_bell_notif_click_dtimes timestamp,
+                                               CONSTRAINT pk_ida_token PRIMARY KEY (ida_token)
 );
 
 COMMENT ON TABLE resident.resident_user_actions IS 'This Table is used to save the  user actions';
@@ -26,5 +26,5 @@ COMMENT ON COLUMN resident.resident_user_actions.last_bell_notif_click_dtimes IS
 CREATE INDEX idx_resident_user_actions_ida_token ON resident.resident_user_actions (ida_token);
 
 GRANT SELECT, INSERT, REFERENCES, UPDATE, DELETE
-   ON resident.resident_user_actions
-   TO residentuser;
+    ON resident.resident_user_actions
+    TO :dbuname;
