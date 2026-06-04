@@ -7,17 +7,17 @@
     <parent>
         <groupId>io.mosip.resident</groupId>
         <artifactId>resident-parent</artifactId>
-        <version>1.2.1-SNAPSHOT</version>
+        <version>1.4.0-SNAPSHOT</version>
     </parent>
     <artifactId>resident-service</artifactId>
     <name>resident-service</name>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.4.0-SNAPSHOT</version>
     <properties>
         <commons.packet.manager.version>1.2.1-SNAPSHOT</commons.packet.manager.version>
-        <kernel.core.version>1.2.1-SNAPSHOT</kernel.core.version>
+        <kernel.core.version>1.4.0-SNAPSHOT</kernel.core.version>
         <kernel.virusscanner.clamav.version>1.2.1-SNAPSHOT</kernel.virusscanner.clamav.version>
         <kernel.authcodeflowproxy.api.version>1.2.1-SNAPSHOT</kernel.authcodeflowproxy.api.version>
-        <kernel.parent.version>1.2.1-SNAPSHOT</kernel.parent.version>
+        <kernel.parent.version>1.4.0-SNAPSHOT</kernel.parent.version>
         <kernel-cbeffutil-api.version>${kernel.parent.version}</kernel-cbeffutil-api.version>
         <kernel.khazana.version>1.2.1-SNAPSHOT</kernel.khazana.version>
         <kernel-openid-bridge-api.version>1.2.1-SNAPSHOT</kernel-openid-bridge-api.version>
