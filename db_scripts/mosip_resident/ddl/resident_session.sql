@@ -35,3 +35,4 @@ CREATE INDEX idx_resident_session_ida_token ON resident.resident_session (ida_to
 GRANT SELECT, INSERT, REFERENCES, UPDATE, DELETE
     ON resident.resident_session
     TO :dbuname;
+ALTER TABLE resident.resident_session alter column machine_type type varchar(100);

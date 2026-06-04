@@ -54,7 +54,7 @@ public class ProxyIdRepoControllerTest {
 
 	@Mock
 	private ProxyIdRepoService service;
-	
+
 	@Mock
 	private AuditUtil auditUtil;
 
