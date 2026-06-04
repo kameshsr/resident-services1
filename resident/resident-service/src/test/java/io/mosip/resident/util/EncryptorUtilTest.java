@@ -70,9 +70,8 @@ public class EncryptorUtilTest {
     public void setUp() throws Exception {
         encryptAPIUrl = "http://kernel-keymanager-service/v1/keymanager/encrypt";
 
+        localDateTime = LocalDateTime.of(2024, 1, 1, 0, 0);
         PowerMockito.mockStatic(DateUtils2.class);
-
-        localDateTime = DateUtils2.getUTCCurrentDateTime();
         when(DateUtils2.getUTCCurrentDateTime()).thenReturn(localDateTime);
         when(utilities.getSecureRandom()).thenReturn(new SecureRandom());
     }
