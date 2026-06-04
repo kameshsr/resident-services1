@@ -1,6 +1,6 @@
 package io.mosip.testrig.apirig.resident.testrunner;
 
-import java.io.File;	
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -10,7 +10,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.log4j.Level;
@@ -23,6 +25,7 @@ import com.nimbusds.jose.jwk.RSAKey;
 
 import io.mosip.testrig.apirig.dataprovider.BiometricDataProvider;
 import io.mosip.testrig.apirig.dbaccess.DBManager;
+import io.mosip.testrig.apirig.report.EmailableReport;
 import io.mosip.testrig.apirig.resident.utils.ResidentConfigManager;
 import io.mosip.testrig.apirig.resident.utils.ResidentUtil;
 import io.mosip.testrig.apirig.testrunner.BaseTestCase;
@@ -32,7 +35,6 @@ import io.mosip.testrig.apirig.testrunner.OTPListener;
 import io.mosip.testrig.apirig.utils.AdminTestUtil;
 import io.mosip.testrig.apirig.utils.AuthTestsUtil;
 import io.mosip.testrig.apirig.utils.CertsUtil;
-import io.mosip.testrig.apirig.utils.DependencyResolver;
 import io.mosip.testrig.apirig.utils.GlobalConstants;
 import io.mosip.testrig.apirig.utils.GlobalMethods;
 import io.mosip.testrig.apirig.utils.JWKKeyUtil;
@@ -54,7 +56,6 @@ import io.mosip.testrig.apirig.utils.Watchdog;
 public class MosipTestRunner {
 	private static final Logger LOGGER = Logger.getLogger(MosipTestRunner.class);
 	private static String cachedPath = null;
-	private static String generateDependency;
 
 	public static String jarUrl = MosipTestRunner.class.getProtectionDomain().getCodeSource().getLocation().getPath();
 	public static List<String> languageList = new ArrayList<>();
@@ -84,25 +85,18 @@ public class MosipTestRunner {
 			
 			// Read timeout from properties, fallback to 120 if not set which is 2 hours with buffer timing
 			String timeoutStr = ResidentConfigManager.getproperty("watchdogTimeoutMinutes");
-			long timeoutMinutes = 120; // default
-			if (timeoutStr != null && !timeoutStr.isBlank()) {
-				try {
-					timeoutMinutes = Long.parseLong(timeoutStr);
-				} catch (NumberFormatException e) {
-					LOGGER.warn("Invalid watchdogTimeoutMinutes property: " + timeoutStr + ", using default: 120");
-				}
-			}
+			long timeoutMinutes = timeoutStr.isEmpty() ? 120 : Long.parseLong(timeoutStr);
+
 			watchdog = new Watchdog(timeoutMinutes * 60 * 1000L);
 			watchdog.start();
-			
+						
 			suiteSetup(getRunType());
 			SkipTestCaseHandler.loadTestcaseToBeSkippedList("testCaseSkippedList.txt");
 			GlobalMethods.setModuleNameAndReCompilePattern(ResidentConfigManager.getproperty("moduleNamePattern"));
-			GlobalMethods.reportCaptchaStatus(GlobalConstants.CAPTCHA_ENABLED, false);
 			setLogLevels();
 
 			HealthChecker healthcheck = new HealthChecker();
-			healthcheck.setCurrentRunningModule(GlobalConstants.RESIDENT);
+			healthcheck.setCurrentRunningModule(BaseTestCase.currentModule);
 			Thread trigger = new Thread(healthcheck);
 			trigger.start();
 			
@@ -116,33 +110,17 @@ public class MosipTestRunner {
 
 			// Generate device certificates to be consumed by Mock-MDS
 			PartnerRegistration.deleteCertificates();
+			AdminTestUtil.createAndPublishPolicy();
+			AdminTestUtil.createEditAndPublishPolicy();
 			PartnerRegistration.deviceGeneration();
 
 			BiometricDataProvider.generateBiometricTestData("Registration");
-			
-			String testCasesToExecuteString = ResidentConfigManager.getproperty("testCasesToExecute");
-			
-			generateDependency = ResidentConfigManager.getproperty("generateDependencyJson");
 
-			if (!"yes".equalsIgnoreCase(generateDependency)) {
-
-				String testCasesToExecute = ResidentConfigManager.getproperty("testCasesToExecute");
-				LOGGER.info("Testcases to execute as per config: " + testCasesToExecute);
-
-				if (testCasesToExecute != null && !testCasesToExecute.isBlank()) {
-					DependencyResolver
-							.loadDependencies(getGlobalResourcePath() + "/config/testCaseInterDependency.json");
-
-					ResidentUtil.testCasesInRunScope = DependencyResolver.getDependencies(testCasesToExecute);
-				}
-			}
-			
 			startTestRunner();
 		} catch (Exception e) {
 			LOGGER.error("Exception " + e.getMessage());
 		}
 		
-		ResidentUtil.dbCleanUp();
 		KeycloakUserManager.removeUser();
 		KeycloakUserManager.closeKeycloakInstance();
 
@@ -150,15 +128,10 @@ public class MosipTestRunner {
 
 		HealthChecker.bTerminate = true;
 		
-		if ("yes".equalsIgnoreCase(generateDependency)) {
-			LOGGER.info("Generating test case inter-dependencies");
-			AdminTestUtil.generateTestCaseInterDependencies(BaseTestCase.getTestCaseInterDependencyPath());
-		} else {
-			LOGGER.info("Skipping dependency generation");
-		}
-		
 		// Stop watchdog since task completed successfully
-		watchdog.stop();
+		if (watchdog != null) {
+			watchdog.stop();
+		}
 
 		System.exit(0);
 
@@ -175,9 +148,21 @@ public class MosipTestRunner {
 		if (!runType.equalsIgnoreCase("JAR")) {
 			AuthTestsUtil.removeOldMosipTempTestResource();
 		}
-		BaseTestCase.currentModule = BaseTestCase.runContext + GlobalConstants.RESIDENT;
-		BaseTestCase.certsForModule = BaseTestCase.runContext + GlobalConstants.RESIDENT;
-		ResidentUtil.dbCleanUp();
+		BaseTestCase.currentModule = GlobalConstants.RESIDENT;
+		BaseTestCase.certsForModule = GlobalConstants.RESIDENT;
+		DBManager.executeDBQueries(ResidentConfigManager.getKMDbUrl(), ResidentConfigManager.getKMDbUser(),
+				ResidentConfigManager.getKMDbPass(), ResidentConfigManager.getKMDbSchema(),
+				getGlobalResourcePath() + "/" + "config/keyManagerCertDataDeleteQueries.txt");
+		DBManager.executeDBQueries(ResidentConfigManager.getIdaDbUrl(), ResidentConfigManager.getIdaDbUser(),
+				ResidentConfigManager.getPMSDbPass(), ResidentConfigManager.getIdaDbSchema(),
+				getGlobalResourcePath() + "/" + "config/idaCertDataDeleteQueries.txt");
+		DBManager.executeDBQueries(ResidentConfigManager.getMASTERDbUrl(), ResidentConfigManager.getMasterDbUser(),
+				ResidentConfigManager.getMasterDbPass(), ResidentConfigManager.getMasterDbSchema(),
+				getGlobalResourcePath() + "/" + "config/masterDataCertDataDeleteQueries.txt");
+
+		DBManager.executeDBQueries(ResidentConfigManager.getIdRepoDbUrl(), ResidentConfigManager.getIdRepoDbUser(),
+				ResidentConfigManager.getPMSDbPass(), "idrepo",
+				getGlobalResourcePath() + "/" + "config/idrepoCertDataDeleteQueries.txt");
 		AdminTestUtil.copyResidentTestResource();
 		BaseTestCase.otpListener = new OTPListener();
 		BaseTestCase.otpListener.run();
