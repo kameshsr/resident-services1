@@ -1,10 +1,10 @@
 -- -------------------------------------------------------------------------------------------------
 -- Database Name: mosip_resident
 -- Release Version 	: 1.2.1
--- Purpose    		: Database scripts for Resident Service DB.
+-- Purpose    		: Database scripts for Resident Service DB.       
 -- Create By   		: Manoj SP
 -- Created Date		: April-2022
---
+-- 
 -- Modified Date        Modified By         Comments / Remarks
 -- --------------------------------------------------------------------------------------------------
 -- April-2022			Manoj SP	    Added otp_transaction table creation scripts with comments.
@@ -12,21 +12,21 @@
 
 -- This Table is used to save the OTP for the user whenever user requests for one using the email id / phone number to log into the application.
 CREATE TABLE resident.otp_transaction(
-                                         id character varying(36) NOT NULL,
-                                         ref_id character varying(1024) NOT NULL,
-                                         otp_hash character varying(512) NOT NULL,
-                                         generated_dtimes timestamp,
-                                         expiry_dtimes timestamp,
-                                         validation_retry_count smallint,
-                                         status_code character varying(36),
-                                         lang_code character varying(3),
-                                         cr_by character varying(256) NOT NULL,
-                                         cr_dtimes timestamp NOT NULL,
-                                         upd_by character varying(256),
-                                         upd_dtimes timestamp,
-                                         is_deleted boolean,
-                                         del_dtimes timestamp,
-                                         CONSTRAINT pk_otpt_id PRIMARY KEY (id)
+	id character varying(36) NOT NULL,
+	ref_id character varying(1024) NOT NULL,
+	otp_hash character varying(512) NOT NULL,
+	generated_dtimes timestamp,
+	expiry_dtimes timestamp,
+	validation_retry_count smallint,
+	status_code character varying(36),
+	lang_code character varying(3),
+	cr_by character varying(256) NOT NULL,
+	cr_dtimes timestamp NOT NULL,
+	upd_by character varying(256),
+	upd_dtimes timestamp,
+	is_deleted boolean,
+	del_dtimes timestamp,
+	CONSTRAINT pk_otpt_id PRIMARY KEY (id)
 );
 
 COMMENT ON TABLE resident.otp_transaction IS 'All OTP related data and validation details are maintained here for Pre Registration module.';

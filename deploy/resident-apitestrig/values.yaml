@@ -2,6 +2,6 @@ modules:
   resident:
     enabled: true
     image:
-      repository: mosipqa/apitest-resident
-      tag: develop
+      repository: mosipid/apitest-resident
+      tag: 0.0.1-develop
       pullPolicy: Always
