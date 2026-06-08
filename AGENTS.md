@@ -4,7 +4,7 @@ This file provides guidance to AI agents when working with code in this reposito
 
 ## Project Overview
 
-MOSIP Resident Services is a Spring Boot application (v1.4.0-SNAPSHOT) that provides self-service APIs for residents to manage their identity (UIN/VID) through the [Resident UI](https://github.com/mosip/resident-ui/). It runs on port `8099` at context path `/resident/v1`.
+MOSIP Resident Services is a Spring Boot application that provides self-service APIs for residents to manage their identity (UIN/VID) through the [Resident UI](https://github.com/mosip/resident-ui/). It runs on port `8099` at context path `/resident/v1`.
 
 - Java 21, Maven 3.9.6
 - PostgreSQL 16 (runtime), H2 (tests)
