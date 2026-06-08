@@ -13,9 +13,9 @@
 -- This Table is used to save the  user actions for the user actions table.
 
 CREATE TABLE resident.resident_user_actions(
-                                               ida_token character varying(128) NOT NULL,
-                                               last_bell_notif_click_dtimes timestamp,
-                                               CONSTRAINT pk_ida_token PRIMARY KEY (ida_token)
+    ida_token character varying(128) NOT NULL,
+    last_bell_notif_click_dtimes timestamp,
+    CONSTRAINT pk_ida_token PRIMARY KEY (ida_token)
 );
 
 COMMENT ON TABLE resident.resident_user_actions IS 'This Table is used to save the  user actions';
