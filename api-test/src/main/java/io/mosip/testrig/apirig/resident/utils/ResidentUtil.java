@@ -268,11 +268,22 @@ public class ResidentUtil extends AdminTestUtil {
 				reader.close();
 			}
 
-			GlobalMethods.reportResponse(null, ApplnURI + testCaseDTO.getEndPoint(), "PDF Content:\n" + pdfAsText);
+			Reporter.log(GlobalConstants.REPORT_RESPONSE_PREFIX + GlobalConstants.REPORT_RESPONSE_BODY
+					+ ReportUtil.getTextAreaJsonMsgHtml("PDF Content:\n" + pdfAsText)
+					+ GlobalConstants.REPORT_RESPONSE_SUFFIX);
 
+			String outputForPdf = testCaseDTO.getOutput();
+			try {
+				JSONObject outputJson = new JSONObject(outputForPdf);
+				if (outputJson.has(GlobalConstants.SENDOTPRESP)) {
+					outputJson.remove(GlobalConstants.SENDOTPRESP);
+					outputForPdf = outputJson.toString();
+				}
+			} catch (Exception ignored) {
+			}
 			Map<String, List<OutputValidationDto>> ouputValid = OutputValidationUtil.doJsonOutputValidation(
 					"{\"Content-Type\":\"" + contentType + "\"}",
-					getJsonFromTemplate(testCaseDTO.getOutput(), testCaseDTO.getOutputTemplate()), testCaseDTO,
+					outputForPdf, testCaseDTO,
 					response.getStatusCode());
 
 			Reporter.log(ReportUtil.getOutputValidationReport(ouputValid));
