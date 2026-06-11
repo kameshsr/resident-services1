@@ -29,6 +29,8 @@ The project can be set up in two ways:
 1. [Local Setup (for Development or Contribution)](#local-setup-for-development-or-contribution)
 2. [Local Setup with Docker (Easy Setup for Demos)](#local-setup-with-docker-easy-setup-for-demos)
 
+> **Standalone local dev setup (no full MOSIP platform needed):** To run the Resident service locally with all external MOSIP dependencies (database, config server, authmanager, keymanager, masterdata, ID repository, IDA, PMS, WebSub, object store, etc.) replaced by lightweight Docker containers and WireMock stubs, follow the [Resident Local Development Setup Guide](./resident/local-dev-setup/LOCAL-DEV-SETUP.md).
+
 
 ### Prerequisites
 

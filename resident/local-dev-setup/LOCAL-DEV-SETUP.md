@@ -95,6 +95,18 @@ mosip.resident.url=http://localhost:8099
 mosip.esignet.host=localhost
 mosip.iam.base.url=http://localhost:8082/v1/esignet
 
+# --- Local dev: host placeholders normally injected per-environment ---
+mosip.resident.host=localhost:8099
+mosip.api.internal.host=localhost:8099
+mosip.api.public.host=localhost:8099
+mosip.prereg.host=localhost
+
+# --- Local dev: disable endpoint authentication (NEVER do this in a real environment).
+# Without a real eSignet/Keycloak issuing signed user tokens, endpoints protected by
+# the kernel-auth-adapter AuthFilter always return KER-ATH-401. This override excludes
+# all URL patterns from authentication for local testing. ---
+mosip.service.end-points=/**
+
 # --- Local dev: literal values for unresolved placeholders ---
 mosip.resident.client.secret=a
 resident.oidc.clientid=mosip-resident-oidc-client
@@ -122,6 +134,7 @@ resident.websub.regproc.workflow.complete.secret=a
 | `object.store.s3.secretkey` | `${s3.secretkey}` | `minioadmin` |
 | `object.store.s3.region` | `${s3.region}` | `us-east-1` |
 | `auth.server.admin.issuer.domain.validate` | `true` | `false` |
+| `mosip.resident.request.credential.encryption.key` | `${mosip.resident.request.credential.encryption.key}` (self-referential) | `bW9zaXAtbG9jYWwtZGV2LWNyZWRlbnRpYWwtZW5jLWtleQ==` |
 
 > **Virus scanner:** disabled because no ClamAV container is included; document upload would otherwise fail when scanning.
 > **Salts:** same literal values used by the IDA local setup, so token IDs stay consistent if you later run both setups against shared data.
@@ -266,7 +279,7 @@ http://localhost:8099/resident/v1/swagger-ui/index.html
 ## Known Limitations
 
 - **Mocked responses are canned.** WireMock returns static success payloads (see `docker-compose/wiremock/mappings/resident-mocks.json`). Flows that need real cryptography (keymanager encrypt/decrypt, PDF signing) or real identity data return dummy values — good enough to exercise the resident service code paths, not for end-to-end validation.
-- **No real OIDC login.** The full resident login flow requires eSignet/Keycloak. The JWKS endpoint is stubbed with an empty key set, so endpoints protected by user-token validation cannot be called with a real signed token. Use Swagger for unauthenticated endpoints, and unit/integration tests for the rest.
+- **No real OIDC login.** The full resident login flow requires eSignet/Keycloak. The JWKS endpoint is stubbed with an empty key set, so real signed user tokens cannot be validated. To make APIs testable, the local config sets `mosip.service.end-points=/**`, which excludes every endpoint from the AuthFilter — authentication is effectively disabled locally. Endpoints that read user identity from the token context may still behave differently than in a real deployment.
 - **No ClamAV.** Virus scanning is disabled via `mosip.resident.virus-scanner.enabled=false`.
 - **Port clash with the IDA local setup.** Both stacks use 5455/51000/8082 — run one at a time.
 
@@ -297,6 +310,24 @@ http://localhost:8099/resident/v1/swagger-ui/index.html
 ---
 
 ## Troubleshooting
+
+**`no configuration file provided: not found` when running `docker compose up -d`**
+You are not in the directory containing `docker-compose.yml`. Run the command from `resident/local-dev-setup/docker-compose`.
+
+**`failed to connect to the docker API at npipe:...` (Windows)**
+Docker Desktop is not running. Start it, wait for "Engine running" in the tray icon, verify with `docker info`, then retry.
+
+**Startup fails with `Could not resolve placeholder 'mosip.auth.adapter.impl.basepackage'` and log shows `Invalid URL: localhost` / profile `mz`**
+The running app is using a stale compiled copy of `bootstrap.properties`. Rebuild so `target/classes` picks up your edits: `mvn clean spring-boot:run` (or **Build → Rebuild Project** in IntelliJ).
+
+**`FATAL: database "mosip_resident" does not exist`**
+The postgres container was created before `init.sql` could run (the script only executes on first initialization). Recreate it: `docker compose down && docker compose up -d`, then confirm with `docker exec -it resident_postgres psql -U postgres -c "\l"`. Also check nothing else (e.g. the IDA stack's postgres) is occupying port 5455: `docker ps --format "table {{.Names}}\t{{.Ports}}"`.
+
+**`Circular placeholder reference` at startup**
+A property in `mosip-config` is defined as a reference to itself (e.g. `x=${x}`), expecting an externally injected value. Replace it with a literal — section 3.2 covers the known one (`mosip.resident.request.credential.encryption.key`).
+
+**API calls return `KER-ATH-401 Authentication Failed`**
+The endpoint is protected by the kernel-auth-adapter AuthFilter and there is no real eSignet/Keycloak to issue user tokens locally. The local override `mosip.service.end-points=/**` (section 3.2) excludes all endpoints from authentication; make sure it is present and restart the service.
 
 **Config server returns 404 for properties**
 Verify the volume path in `docker-compose.yml` points to the correct `mosip-config` directory and that you have edited the right property files. Test with `curl http://localhost:51000/config/resident/default/master`.
