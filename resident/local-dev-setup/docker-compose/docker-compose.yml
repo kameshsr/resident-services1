@@ -1,0 +1,61 @@
+services:
+
+  database:
+    image: 'postgres:bookworm'
+    container_name: resident_postgres
+    ports:
+      - "5455:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=mosip123
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  config-server:
+    image: mosipid/config-server:latest
+    container_name: resident_config_server
+    ports:
+      - "51000:51000"
+    volumes:
+      - C:\Users\kames\IdeaProjects\mosip-configNew:/mosip-config
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+      - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:/mosip-config
+      - SPRING_CLOUD_CONFIG_SERVER_ACCEPT_EMPTY=true
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_FORCE_PULL=false
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_CLONEONSTART=false
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_REFRESHRATE=0
+      - SERVER_PORT=51000
+      - MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE=*
+      - MANAGEMENT_ENDPOINT_HEALTH_SHOW_DETAILS=always
+      - MANAGEMENT_SECURITY_ENABLED=false
+      - SPRING_SECURITY_ENABLED=false
+
+  mock-service:
+    image: wiremock/wiremock:latest
+    container_name: resident_mock_service
+    ports:
+      - "8082:8082"
+    environment:
+      - JAVA_OPTS=-Xms256m -Xmx512m
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+      - ./wiremock/__files:/home/wiremock/__files
+    command: --verbose --port 8082 --local-response-templating --max-template-cache-entries 10 --no-request-journal
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8082/__admin/health || exit 1"]
+      interval: 500s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  object-store:
+    image: minio/minio:latest
+    container_name: resident_minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - MINIO_ROOT_USER=minioadmin
+      - MINIO_ROOT_PASSWORD=minioadmin
+    command: server /data --console-address ":9001"

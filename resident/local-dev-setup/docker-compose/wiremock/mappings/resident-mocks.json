@@ -1,0 +1,440 @@
+{
+  "mappings": [
+    {
+      "name": "Authmanager - client id/secret token (self token for kernel-auth-adapter)",
+      "request": {
+        "method": "POST",
+        "urlPath": "/v1/authmanager/authenticate/clientidsecretkey"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json",
+          "Set-Cookie": "Authorization=eyJhbGciOiJub25lIn0.eyJzdWIiOiJtb3NpcC1yZXNpZGVudC1jbGllbnQiLCJpc3MiOiJsb2NhbCIsImV4cCI6NDg5NDk2NDQ4NX0.; Path=/; HttpOnly"
+        },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"io.mosip.authmanager\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"status\":\"success\",\"message\":\"Clientid and Token combination had been validated successfully\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Keycloak - dummy token endpoint",
+      "request": {
+        "method": "POST",
+        "url": "/auth/realms/mosip/protocol/openid-connect/token"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "jsonBody": {
+          "access_token": "DUMMY.AUTH.TOKEN",
+          "token_type": "Bearer",
+          "expires_in": 300
+        }
+      }
+    },
+    {
+      "name": "Esignet - JWKS certs endpoint",
+      "request": {
+        "method": "GET",
+        "urlPath": "/v1/esignet/oauth/.well-known/jwks.json"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "jsonBody": { "keys": [] }
+      }
+    },
+    {
+      "name": "WebSub - hub register/publish/subscribe (with query params)",
+      "request": {
+        "method": "POST",
+        "urlPath": "/hub/",
+        "queryParameters": {
+          "hub.mode": { "matches": ".*" },
+          "hub.topic": { "matches": ".*" }
+        }
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/x-www-form-urlencoded" },
+        "body": "hub.mode=accepted"
+      }
+    },
+    {
+      "name": "WebSub - hub register/publish/subscribe (fallback)",
+      "request": {
+        "method": "POST",
+        "urlPath": "/hub/"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/x-www-form-urlencoded" },
+        "body": "hub.mode=accepted"
+      }
+    },
+    {
+      "name": "Auditmanager - audits",
+      "request": {
+        "method": "POST",
+        "urlPath": "/v1/auditmanager/audits"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.applicanttype.getApplicantType\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"status\":true},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Masterdata - template by langcode and templatetypecode",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/masterdata/templates/[^/]+/[^/]+"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"templates\":[{\"id\":\"1101\",\"name\":\"Local dev template\",\"description\":\"Generic template for local development\",\"fileFormatCode\":\"txt\",\"model\":null,\"fileText\":\"Hello $name_eng, your request $eventId is being processed. - MOSIP local dev\",\"moduleId\":null,\"moduleName\":null,\"templateTypeCode\":\"generic\",\"langCode\":\"eng\",\"isActive\":true}]},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Masterdata - all templates",
+      "request": {
+        "method": "GET",
+        "urlPath": "/v1/masterdata/templates"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"templates\":[{\"id\":\"1101\",\"name\":\"Local dev template\",\"description\":\"Generic template for local development\",\"fileFormatCode\":\"txt\",\"model\":null,\"fileText\":\"Hello $name_eng, your request $eventId is being processed. - MOSIP local dev\",\"moduleId\":null,\"moduleName\":null,\"templateTypeCode\":\"generic\",\"langCode\":\"eng\",\"isActive\":true}]},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Masterdata - generic GET fallback (dynamic fields, locations, centers, valid documents)",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/masterdata/.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Notifier - send SMS",
+      "request": {
+        "method": "POST",
+        "urlPath": "/v1/notifier/sms/send"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"status\":\"success\",\"message\":\"SMS Request submitted\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Notifier - send Email",
+      "request": {
+        "method": "POST",
+        "urlPathPattern": "/v1/notifier/email/send.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"status\":\"success\",\"message\":\"Email Request submitted\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "IDA internal - generate OTP",
+      "request": {
+        "method": "POST",
+        "urlPath": "/idauthentication/v1/internal/otp"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.identity.otp.internal\",\"version\":\"1.0\",\"transactionID\":\"{{randomInt lower=1000000000 upper=2000000000}}\",\"responseTime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":{\"maskedMobile\":\"XXXXXX3478\",\"maskedEmail\":\"joXXXX@example.com\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "IDA internal - auth",
+      "request": {
+        "method": "POST",
+        "urlPath": "/idauthentication/v1/internal/auth"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.identity.auth.internal\",\"version\":\"1.0\",\"transactionID\":\"{{randomInt lower=1000000000 upper=2000000000}}\",\"responseTime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":{\"authStatus\":true,\"authToken\":\"281996861380011336462282951327672601\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "IDA internal - auth transactions",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/idauthentication/v1/internal/authTransactions.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.identity.authtransactions.read\",\"version\":\"1.0\",\"responseTime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":{\"authTransactions\":[]},\"errors\":null}"
+      }
+    },
+    {
+      "name": "IDA internal - get certificate",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/idauthentication/v1/internal/getCertificate.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"certificate\":\"-----BEGIN CERTIFICATE-----\\nMIIBkTCB+wIJAKHHIG...DUMMY...LOCAL...DEV...CERT...\\n-----END CERTIFICATE-----\",\"certSignRequest\":null,\"issuedAt\":\"2026-01-01T00:00:00.000Z\",\"expiryAt\":\"2036-01-01T00:00:00.000Z\",\"timestamp\":\"2026-01-01T00:00:00.000Z\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "ID Repository - get identity by UIN/VID",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/idrepository/v1/identity/idvid/.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.id.read\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"status\":\"ACTIVATED\",\"identity\":{\"IDSchemaVersion\":0.1,\"UIN\":\"8952059168\",\"firstName\":[{\"language\":\"eng\",\"value\":\"John\"}],\"middleName\":[{\"language\":\"eng\",\"value\":\"David\"}],\"lastName\":[{\"language\":\"eng\",\"value\":\"Smith\"}],\"dateOfBirth\":\"1990/01/01\",\"gender\":[{\"language\":\"eng\",\"value\":\"Male\"}],\"phone\":\"9912993478\",\"email\":\"john.smith@example.com\",\"preferredLang\":\"eng\"},\"documents\":[]},\"errors\":null}"
+      }
+    },
+    {
+      "name": "ID Repository - VID create/operations",
+      "request": {
+        "method": "POST",
+        "urlPathPattern": "/idrepository/v1/vid.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.vid.create\",\"version\":\"v1\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"vidStatus\":\"ACTIVE\",\"VID\":\"{{randomInt lower=1000000000000000 upper=2000000000000000}}\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "ID Repository - retrieve VIDs by UIN",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/idrepository/v1/vid/uin/.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.vid.retrieve\",\"version\":\"v1\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"vids\":[{\"vid\":\"4734471952141902\",\"vidType\":\"Perpetual\"}]},\"errors\":null}"
+      }
+    },
+    {
+      "name": "ID Repository - get UIN by VID (GET)",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/idrepository/v1/vid/[0-9]+"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.vid.retrieve\",\"version\":\"v1\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"UIN\":\"8952059168\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Keymanager - encrypt",
+      "request": {
+        "method": "POST",
+        "urlPath": "/v1/keymanager/encrypt"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"data\":\"TU9TSVAtTE9DQUwtREVWLUVOQ1JZUFRFRC1EQVRB\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Keymanager - decrypt",
+      "request": {
+        "method": "POST",
+        "urlPath": "/v1/keymanager/decrypt"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"data\":\"TU9TSVAtTE9DQUwtREVWLURFQ1JZUFRFRC1EQVRB\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Keymanager - PDF sign",
+      "request": {
+        "method": "POST",
+        "urlPath": "/v1/keymanager/pdf/sign"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"data\":\"JVBERi0xLjQKJSBNT1NJUCBsb2NhbCBkZXYgZHVtbXkgc2lnbmVkIFBERg==\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "PMS - partner manager partners",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/partnermanager/partners.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"partners\":[{\"partnerID\":\"auth_v1z0816154432\",\"partnerName\":\"Local Dev Online Verification Partner\",\"partnerType\":\"Online_Verification_Partner\",\"status\":\"Active\"}]},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Regproc - external status search",
+      "request": {
+        "method": "POST",
+        "urlPath": "/registrationprocessor/v1/registrationstatus/externalstatus/search"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.registration.external.status\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":[{\"registrationId\":\"10001100010000120260101000000\",\"statusCode\":\"PROCESSED\"}],\"errors\":null}"
+      }
+    },
+    {
+      "name": "Regproc - transaction search by RID",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/registrationprocessor/v1/registrationtransaction/search/.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.regproc.transaction.search\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":[{\"id\":\"txn-local-dev-001\",\"registrationId\":\"10001100010000120260101000000\",\"transactionTypeCode\":\"PACKET_RECEIVER\",\"statusCode\":\"PROCESSED\",\"statusComment\":\"Packet processed (local dev mock)\"}],\"errors\":null}"
+      }
+    },
+    {
+      "name": "Regproc - registration status sync",
+      "request": {
+        "method": "POST",
+        "urlPathPattern": "/registrationprocessor/v1/registrationstatus/sync.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.registration.sync\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":[{\"registrationId\":\"10001100010000120260101000000\",\"status\":\"SUCCESS\"}],\"errors\":null}"
+      }
+    },
+    {
+      "name": "Syncdata - latest ID schema",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/syncdata/latestidschema.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"id\":\"local-dev-schema\",\"idVersion\":0.1,\"title\":\"local dev id schema\",\"schemaJson\":\"{\\\"$schema\\\":\\\"http://json-schema.org/draft-07/schema#\\\",\\\"type\\\":\\\"object\\\",\\\"properties\\\":{\\\"identity\\\":{\\\"type\\\":\\\"object\\\",\\\"properties\\\":{}}}}\",\"effectiveFrom\":\"2026-01-01T00:00:00.000Z\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Digital card - status",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/digitalcard/.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"id\":\"card-local-dev-001\",\"statusCode\":\"AVAILABLE\",\"url\":\"http://localhost:8082/v1/digitalcard/download/card-local-dev-001\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "RID generator - generate RID",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/ridgenerator/generate/rid.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"rid\":\"10001100010000120260611{{randomInt lower=100000 upper=999999}}\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Credential request - generator and status",
+      "request": {
+        "method": "POST",
+        "urlPathPattern": "/v1/credentialrequest/requestgenerator.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.credential.request.generator\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":{\"requestId\":\"{{randomValue type='UUID'}}\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Credential request - get status",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/credentialrequest/get/.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.credential.request.status\",\"version\":\"1.0\",\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"response\":{\"requestId\":\"local-dev-request-001\",\"statusCode\":\"ISSUED\"},\"errors\":null}"
+      }
+    },
+    {
+      "name": "Credential service - types",
+      "request": {
+        "method": "GET",
+        "urlPath": "/v1/credentialservice/types"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"credentialTypes\":[{\"name\":\"euin\",\"description\":\"euin credential\"},{\"name\":\"vercred\",\"description\":\"verifiable credential\"}]},\"errors\":null}"
+      }
+    },
+    {
+      "name": "OTP manager - generate (kept for kernel compatibility)",
+      "request": {
+        "method": "POST",
+        "urlPath": "/v1/otpmanager/otp/generate"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":null,\"version\":null,\"responsetime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"otp\":\"{{randomInt lower=100000 upper=999999}}\",\"status\":\"GENERATION_SUCCESSFUL\"},\"errors\":null}"
+      }
+    }
+  ]
+}
