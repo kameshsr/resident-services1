@@ -307,6 +307,19 @@
       }
     },
     {
+      "name": "PMS - admin partners (paginated list)",
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/v1/partnermanager/admin-partners.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": { "Content-Type": "application/json" },
+        "transformers": ["response-template"],
+        "body": "{\"id\":\"mosip.pms.admin.partners.get\",\"version\":\"1.0\",\"responseTime\":\"{{now timezone='UTC' format='yyyy-MM-dd\\'T\\'HH:mm:ss.SSS\\'Z\\''}}\",\"metadata\":null,\"response\":{\"pageNo\":0,\"pageSize\":8,\"totalResults\":23,\"data\":[{\"partnerId\":\"mpartner-default-auth\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"IITB\",\"policyGroupId\":\"mpolicygroup-default-auth\",\"policyGroupName\":\"mpolicygroup-default-auth\",\"emailAddress\":\"info@mosip.io\",\"certificateUploadStatus\":\"not_uploaded\",\"status\":\"active\",\"isActive\":true,\"createdDateTime\":\"2026-01-09T10:29:42.531+00:00\"},{\"partnerId\":\"newparsfw3g3\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"MOSIP\",\"policyGroupId\":\"49998\",\"policyGroupName\":\"d8a_12345\",\"emailAddress\":\"dvvevw34@gmail.com\",\"certificateUploadStatus\":\"not_uploaded\",\"status\":\"inactive\",\"isActive\":false,\"createdDateTime\":\"2026-05-15T18:21:51.399+00:00\"},{\"partnerId\":\"ovp123\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"MOSIP\",\"policyGroupId\":\"67203\",\"policyGroupName\":\"130_12345\",\"emailAddress\":\"ovp.239@gmail.com\",\"certificateUploadStatus\":\"uploaded\",\"status\":\"active\",\"isActive\":true,\"createdDateTime\":\"2026-05-13T12:03:00.963+00:00\"},{\"partnerId\":\"sajdghjdj\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"MOSIP\",\"policyGroupId\":\"1916\",\"policyGroupName\":\"e03_12345\",\"emailAddress\":\"rakssdfdsf2@gmail.com\",\"certificateUploadStatus\":\"not_uploaded\",\"status\":\"inactive\",\"isActive\":false,\"createdDateTime\":\"2026-05-14T12:24:15.552+00:00\"},{\"partnerId\":\"dsdffd\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"MOSIP\",\"policyGroupId\":\"55012\",\"policyGroupName\":\"5da_12345\",\"emailAddress\":\"rakshisd2002@gmail.com\",\"certificateUploadStatus\":\"uploaded\",\"status\":\"active\",\"isActive\":true,\"createdDateTime\":\"2026-05-14T14:31:17.939+00:00\"},{\"partnerId\":\"fsdfrer\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"MOSIP\",\"policyGroupId\":\"1916\",\"policyGroupName\":\"e03_12345\",\"emailAddress\":\"rakshdfds2002@gmail.com\",\"certificateUploadStatus\":\"not_uploaded\",\"status\":\"inactive\",\"isActive\":false,\"createdDateTime\":\"2026-05-14T12:36:18.937+00:00\"},{\"partnerId\":\"ewry\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"MOSIP\",\"policyGroupId\":\"55012\",\"policyGroupName\":\"5da_12345\",\"emailAddress\":\"raeewr2002@gmail.com\",\"certificateUploadStatus\":\"uploaded\",\"status\":\"deactivated\",\"isActive\":false,\"createdDateTime\":\"2026-05-14T14:35:54.623+00:00\"},{\"partnerId\":\"dsfgf\",\"partnerType\":\"Online_Verification_Partner\",\"orgName\":\"MOSIP\",\"policyGroupId\":\"55488\",\"policyGroupName\":\"5da_update_policy_group\",\"emailAddress\":\"sdfdfs2@gmail.com\",\"certificateUploadStatus\":\"uploaded\",\"status\":\"deactivated\",\"isActive\":false,\"createdDateTime\":\"2026-05-14T14:32:53.309+00:00\"}]},\"errors\":[]}"
+      }
+    },
+    {
       "name": "Regproc - external status search",
       "request": {
         "method": "POST",
