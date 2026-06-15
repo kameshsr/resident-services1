@@ -53,7 +53,6 @@ import io.mosip.resident.dto.NotificationRequestDto;
 import io.mosip.resident.dto.NotificationRequestDtoV2;
 import io.mosip.resident.dto.NotificationResponseDTO;
 import io.mosip.resident.dto.PartnerCredentialTypePolicyDto;
-import io.mosip.resident.dto.PartnerResponseDto;
 import io.mosip.resident.dto.RequestWrapper;
 import io.mosip.resident.dto.ResidentCredentialRequestDto;
 import io.mosip.resident.dto.ResidentCredentialResponseDto;
@@ -168,22 +167,20 @@ public class ResidentCredentialServiceImpl implements ResidentCredentialService 
 		logger.debug("ResidentCredentialServiceImpl::reqCredential()::entry");
 		ResidentCredentialResponseDto residentCredentialResponseDto = new ResidentCredentialResponseDto();
 		RequestWrapper<CredentialReqestDto> requestDto = new RequestWrapper<>();
-		ResponseWrapper<PartnerResponseDto> parResponseDto = new ResponseWrapper<PartnerResponseDto>();
-		PartnerResponseDto partnerResponseDto = new PartnerResponseDto();
 		CredentialReqestDto credentialReqestDto = new CredentialReqestDto();
 		Map<String, Object> additionalAttributes = new HashMap<>();
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/" + dto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
 		try {
 				credentialReqestDto = prepareCredentialRequest(dto, individualId);
 				requestDto.setId("mosip.credential.request.service.id");
 				requestDto.setRequest(credentialReqestDto);
 				requestDto.setRequesttime(DateUtils2.formatToISOString(DateUtils2.getUTCCurrentDateTime()));
 				requestDto.setVersion("1.0");
-				parResponseDto = residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class);
-				partnerResponseDto = JsonUtil.readValue(JsonUtil.writeValueAsString(parResponseDto.getResponse()),
-						PartnerResponseDto.class);
-				additionalAttributes.put("partnerName", partnerResponseDto.getOrganizationName());
+				// Fetch partner details from the new Partner Manager admin partners endpoint
+				// (getAdminPartners) instead of the deprecated /partners/{partnerId} API which
+				// was causing 504 Gateway Timeout errors.
+				Map<String, ?> partnerDetail = proxyPartnerManagementService
+						.getPartnerDetailFromPartnerIdAndPartnerType(dto.getIssuer(), null);
+				additionalAttributes.put("partnerName", partnerDetail.get(ResidentConstants.ORGANIZATION_NAME));
 				additionalAttributes.put("encryptionKey", credentialReqestDto.getEncryptionKey());
 				additionalAttributes.put("credentialName", credentialReqestDto.getCredentialType());
 

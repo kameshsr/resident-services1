@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
@@ -35,6 +36,7 @@ import io.mosip.kernel.core.util.CryptoUtil;
 import io.mosip.kernel.core.util.DateUtils2;
 import io.mosip.resident.constant.ApiName;
 import io.mosip.resident.constant.EventStatusSuccess;
+import io.mosip.resident.constant.ResidentConstants;
 import io.mosip.resident.dto.CredentialCancelRequestResponseDto;
 import io.mosip.resident.dto.CredentialReqestDto;
 import io.mosip.resident.dto.CredentialRequestStatusDto;
@@ -167,11 +169,8 @@ public class ResidentCredentialServiceTest {
 		requestDto.setRequesttime(DateUtils2.getUTCCurrentDateTimeString());
 		requestDto.setVersion("1.0");
 
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/"
-				+ residentCredentialRequestDto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
-		when(residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class))
-				.thenReturn(partnerResponseDtoResponseWrapper);
+		doReturn(Map.of(ResidentConstants.ORGANIZATION_NAME, "MOSIP"))
+				.when(proxyPartnerManagementServiceImpl).getPartnerDetailFromPartnerIdAndPartnerType(any(), any());
 		when(residentServiceRestClient.postApi(any(), any(), any(), any())).thenReturn(response);
 
 		ResidentCredentialResponseDto credentialResponseDto = residentCredentialService
@@ -241,11 +240,8 @@ public class ResidentCredentialServiceTest {
 		requestDto.setRequesttime(DateUtils2.getUTCCurrentDateTimeString());
 		requestDto.setVersion("1.0");
 
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/"
-				+ residentCredentialRequestDto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
-		when(residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class))
-				.thenReturn(partnerResponseDtoResponseWrapper);
+		doReturn(Map.of(ResidentConstants.ORGANIZATION_NAME, "MOSIP"))
+				.when(proxyPartnerManagementServiceImpl).getPartnerDetailFromPartnerIdAndPartnerType(any(), any());
 		when(residentServiceRestClient.postApi(any(), any(), any(), any()))
 				.thenThrow(ApisResourceAccessException.class);
 		residentCredentialService.reqCredential(residentCredentialRequestDto);
@@ -276,11 +272,8 @@ public class ResidentCredentialServiceTest {
 		requestDto.setRequesttime(DateUtils2.getUTCCurrentDateTimeString());
 		requestDto.setVersion("1.0");
 
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/"
-				+ residentCredentialRequestDto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
-		when(residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class))
-				.thenReturn(partnerResponseDtoResponseWrapper);
+		doReturn(Map.of(ResidentConstants.ORGANIZATION_NAME, "MOSIP"))
+				.when(proxyPartnerManagementServiceImpl).getPartnerDetailFromPartnerIdAndPartnerType(any(), any());
 		when(residentServiceRestClient.postApi(any(), any(), any(), any()))
 				.thenReturn(partnerResponseDtoResponseWrapper);
 
