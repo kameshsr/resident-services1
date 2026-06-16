@@ -9,6 +9,7 @@ import io.mosip.resident.constant.ResidentErrorCode;
 import io.mosip.resident.exception.ApisResourceAccessException;
 import io.mosip.resident.exception.ResidentServiceCheckedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -26,6 +27,12 @@ public class PartnersByPartnerType {
 
     @Autowired
     private ResidentServiceRestClient residentServiceRestClient;
+    
+    @Value("${mosip.resident.page.no:0}")
+    private String pageNo;
+    
+    @Value("${mosip.resident.page.size:total}")
+    private String pageSize;
 
     public ResponseWrapper<?> getPartnersByPartnerType(Optional<String> partnerType, ApiName apiUrl)
             throws ResidentServiceCheckedException {
@@ -37,11 +44,15 @@ public class PartnersByPartnerType {
         List<String> queryParamName = new ArrayList<String>();
         if(partnerType.isPresent()) {
             queryParamName.add(ResidentConstants.PARTNER_TYPE);
+            queryParamName.add(ResidentConstants.PAGE_NO);
+            queryParamName.add(ResidentConstants.PAGE_SIZE);
         }
 
         List<Object> queryParamValue = new ArrayList<>();
         if(partnerType.isPresent()) {
             queryParamValue.add(partnerType.get());
+            queryParamValue.add(pageNo);
+            queryParamValue.add(pageSize);
         }
 
         try {

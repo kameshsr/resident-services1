@@ -35,7 +35,7 @@ public class ProxyPartnerManagementServiceImpl implements ProxyPartnerManagement
 	@Override
 	public ResponseWrapper<?> getPartnersByPartnerType(String partnerType)
 			throws ResidentServiceCheckedException {
-		return partnersByPartnerTypeCache.getPartnersByPartnerType(partnerType, ApiName.PARTNER_API_URL);
+		return partnersByPartnerTypeCache.getPartnersByPartnerType(partnerType, ApiName.PARTNER_API_NEW_URL);
 	}
 
 	@SuppressWarnings("unchecked")

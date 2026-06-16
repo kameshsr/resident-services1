@@ -329,4 +329,6 @@ public class ResidentConstants {
     public static final String REG_PROC_CREDENTIAL_PARTNER_POLICY_URL = "mosip.resident.reg-processer-credential-partner-policy-url";
 
     public static final String ALLOWED_URL = "auth.allowed.urls";
+    public static final String PAGE_NO = "pageNo";
+    public static final String PAGE_SIZE = "pageSize";
 }
