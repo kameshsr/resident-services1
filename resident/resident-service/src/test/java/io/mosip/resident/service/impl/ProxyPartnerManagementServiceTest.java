@@ -118,13 +118,19 @@ public class ProxyPartnerManagementServiceTest {
 	
 	@Test
 	public void testGetPartnerDetailFromPartnerId() throws ResidentServiceCheckedException {
+		Map<String, Object> partnerMap = new HashMap<>();
+		partnerMap.put("partnerId", "2345671");
+		ResponseWrapper partnerResponseWrapper = new ResponseWrapper<>();
+		partnerResponseWrapper.setResponse(Map.of("data", List.of(partnerMap)));
+		when(partnersByPartnerTypeCache.getPartnersByPartnerIdAndPartnerType(any(), any(), any()))
+				.thenReturn(partnerResponseWrapper);
 		Map<String, ?> result = proxyPartnerManagementService.getPartnerDetailFromPartnerIdAndPartnerType("2345671", "Auth");
-		assertEquals("2345671", result.get("partnerID"));
+		assertEquals("2345671", result.get("partnerId"));
 	}
 
 	@Test(expected = ResidentServiceException.class)
 	public void testGetPartnerDetailFromPartnerIdException() throws ResidentServiceCheckedException, ApisResourceAccessException {
-		when(partnersByPartnerTypeCache.getPartnersByPartnerType(any(), any()))
+		when(partnersByPartnerTypeCache.getPartnersByPartnerIdAndPartnerType(any(), any(), any()))
 				.thenThrow(new ResidentServiceCheckedException(ResidentErrorCode.PARTNER_SERVICE_EXCEPTION));
 		proxyPartnerManagementService.getPartnerDetailFromPartnerIdAndPartnerType("", "Auth");
 	}
