@@ -44,15 +44,15 @@ public class ProxyPartnerManagementServiceImpl implements ProxyPartnerManagement
 	public Map<String, ?> getPartnerDetailFromPartnerIdAndPartnerType(String partnerId, String partnerType) {
 		ResponseWrapper<?> response = null;
 		try {
-			response = partnersByPartnerTypeCache.getPartnersByPartnerType(partnerType, ApiName.PARTNER_DETAILS_NEW_URL);
+			response = partnersByPartnerTypeCache.getPartnersByPartnerType(partnerType, ApiName.PARTNER_API_NEW_URL);
 		} catch (ResidentServiceCheckedException e) {
 			throw new ResidentServiceException(ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorCode(),
 					ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorMessage(), e);
 		}
 		Map<String, Object> partnerResponse = new LinkedHashMap<>((Map<String, Object>) response.getResponse());
-        List<Map<String,?>> partners = (List<Map<String, ?>>) partnerResponse.get(ResidentConstants.PARTNERS);
+        List<Map<String,?>> partners = (List<Map<String, ?>>) partnerResponse.get(ResidentConstants.DATA);
         return partners.stream()
-        		.filter(map -> ((String)map.get(ResidentConstants.PMS_PARTNER_ID)).equals(partnerId))
+        		.filter(map -> ((String)map.get(ResidentConstants.PARTNER_ID)).equals(partnerId))
         		.findAny()
         		.orElse(Map.of());
 	}
