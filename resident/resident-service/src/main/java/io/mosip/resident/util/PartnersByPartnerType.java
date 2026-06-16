@@ -78,6 +78,12 @@ public class PartnersByPartnerType {
 
                 Object responseObj = pageResponseWrapper.getResponse();
                 if (!(responseObj instanceof Map)) {
+                    // Response is not a paginated map. On the very first call, return it
+                    // unchanged to preserve the original (non-paginated) contract.
+                    if (mergedPartners.isEmpty()) {
+                        logger.debug("GetPartnersByPartnerType::getPartnersByPartnerType()::exit (non-paginated response)");
+                        return pageResponseWrapper;
+                    }
                     break;
                 }
 
