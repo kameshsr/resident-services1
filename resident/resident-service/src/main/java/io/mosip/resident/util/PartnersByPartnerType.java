@@ -33,8 +33,12 @@ public class PartnersByPartnerType {
     
     @Value("${mosip.resident.page.size:total}")
     private String pageSize;
+    
+    public ResponseWrapper<?> getPartnersByPartnerType(Optional<String> partnerType, ApiName apiUrl) throws ResidentServiceCheckedException {
+        return getPartnersByPartnerIdAndType(null, partnerType, apiUrl);
+    }
 
-    public ResponseWrapper<?> getPartnersByPartnerType(Optional<String> partnerType, ApiName apiUrl)
+    public ResponseWrapper<?> getPartnersByPartnerIdAndType(String partnerId, Optional<String> partnerType, ApiName apiUrl)
             throws ResidentServiceCheckedException {
         logger.debug("GetPartnersByPartnerType::getPartnersByPartnerType()::entry");
         ResponseWrapper<?> responseWrapper = new ResponseWrapper<>();
@@ -46,6 +50,9 @@ public class PartnersByPartnerType {
             queryParamName.add(ResidentConstants.PARTNER_TYPE);
             queryParamName.add(ResidentConstants.PAGE_NO);
             queryParamName.add(ResidentConstants.PAGE_SIZE);
+            if(partnerId!=null){
+                queryParamName.add(ResidentConstants.PARTNER_ID);
+            }
         }
 
         List<Object> queryParamValue = new ArrayList<>();
@@ -53,6 +60,9 @@ public class PartnersByPartnerType {
             queryParamValue.add(partnerType.get());
             queryParamValue.add(pageNo);
             queryParamValue.add(pageSize);
+            if(partnerId!=null){
+                queryParamValue.add(partnerId);
+            }
         }
 
         try {

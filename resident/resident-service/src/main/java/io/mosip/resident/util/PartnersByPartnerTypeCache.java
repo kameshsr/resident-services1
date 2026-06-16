@@ -24,4 +24,9 @@ public class PartnersByPartnerTypeCache {
     public ResponseWrapper<?> getPartnersByPartnerType(String partnerType, ApiName apiUrl) throws ResidentServiceCheckedException {
         return partnersByPartnerType.getPartnersByPartnerType(StringUtils.isBlank(partnerType) ? Optional.empty() : Optional.of(partnerType), apiUrl);
     }
+
+    @Cacheable(value = "partnerListCache", key = "#partnerId + '_' + #partnerType + '_' + #apiUrl")
+    public ResponseWrapper<?> getPartnersByPartnerIdAndPartnerType(String partnerId, String partnerType, ApiName apiUrl) throws ResidentServiceCheckedException {
+        return partnersByPartnerType.getPartnersByPartnerIdAndType(partnerId, StringUtils.isBlank(partnerType) ? Optional.empty() : Optional.of(partnerType), apiUrl);
+    }
 }
