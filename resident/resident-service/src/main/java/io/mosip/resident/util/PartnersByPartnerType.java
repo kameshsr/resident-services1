@@ -110,7 +110,7 @@ public class PartnersByPartnerType {
             } while (mergedPartners.size() < totalResults && pageCounter < MAX_PAGES);
 
         } catch (ApisResourceAccessException e) {
-            logger.error("Error occured in accessing partners list %s", e.getMessage());
+            logger.error("Error occured in accessing partners list from partner management API: {}", e.getMessage(), e);
             throw new ResidentServiceCheckedException(ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorCode(),
                     ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorMessage(), e);
         }
