@@ -5,10 +5,7 @@ import java.net.URI;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import io.mosip.resident.util.*;
@@ -53,7 +50,6 @@ import io.mosip.resident.dto.NotificationRequestDto;
 import io.mosip.resident.dto.NotificationRequestDtoV2;
 import io.mosip.resident.dto.NotificationResponseDTO;
 import io.mosip.resident.dto.PartnerCredentialTypePolicyDto;
-import io.mosip.resident.dto.PartnerResponseDto;
 import io.mosip.resident.dto.RequestWrapper;
 import io.mosip.resident.dto.ResidentCredentialRequestDto;
 import io.mosip.resident.dto.ResidentCredentialResponseDto;
@@ -168,44 +164,40 @@ public class ResidentCredentialServiceImpl implements ResidentCredentialService 
 		logger.debug("ResidentCredentialServiceImpl::reqCredential()::entry");
 		ResidentCredentialResponseDto residentCredentialResponseDto = new ResidentCredentialResponseDto();
 		RequestWrapper<CredentialReqestDto> requestDto = new RequestWrapper<>();
-		ResponseWrapper<PartnerResponseDto> parResponseDto = new ResponseWrapper<PartnerResponseDto>();
-		PartnerResponseDto partnerResponseDto = new PartnerResponseDto();
 		CredentialReqestDto credentialReqestDto = new CredentialReqestDto();
 		Map<String, Object> additionalAttributes = new HashMap<>();
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/" + dto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
 		try {
-				credentialReqestDto = prepareCredentialRequest(dto, individualId);
-				requestDto.setId("mosip.credential.request.service.id");
-				requestDto.setRequest(credentialReqestDto);
-				requestDto.setRequesttime(DateUtils2.formatToISOString(DateUtils2.getUTCCurrentDateTime()));
-				requestDto.setVersion("1.0");
-				parResponseDto = residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class);
-				partnerResponseDto = JsonUtil.readValue(JsonUtil.writeValueAsString(parResponseDto.getResponse()),
-						PartnerResponseDto.class);
-				additionalAttributes.put("partnerName", partnerResponseDto.getOrganizationName());
-				additionalAttributes.put("encryptionKey", credentialReqestDto.getEncryptionKey());
-				additionalAttributes.put("credentialName", credentialReqestDto.getCredentialType());
+			credentialReqestDto = prepareCredentialRequest(dto, individualId);
+			requestDto.setId("mosip.credential.request.service.id");
+			requestDto.setRequest(credentialReqestDto);
+			requestDto.setRequesttime(DateUtils2.formatToISOString(DateUtils2.getUTCCurrentDateTime()));
+			requestDto.setVersion("1.0");
+			Map<String, ?> partnerDetail = proxyPartnerManagementService.getPartnerDetailFromPartnerIdAndPartnerType(
+					dto.getIssuer(), "");
 
-				ResponseWrapper<ResidentCredentialResponseDto> responseDto = residentServiceRestClient.postApi(
-						env.getProperty(ApiName.CREDENTIAL_REQ_URL.name()), MediaType.APPLICATION_JSON, requestDto,
-						ResponseWrapper.class);
-				residentCredentialResponseDto = JsonUtil.readValue(
-						JsonUtil.writeValueAsString(responseDto.getResponse()), ResidentCredentialResponseDto.class);
-				additionalAttributes.put(IdType.RID.name(), residentCredentialResponseDto.getRequestId());
-				if(!Utility.isSecureSession()){
-					sendNotification(dto.getIndividualId(), NotificationTemplateCode.RS_CRE_REQ_SUCCESS,
-							additionalAttributes);
-				}
-				
+			additionalAttributes.put("partnerName", partnerDetail.get(ResidentConstants.ORGANIZATION_NAME));
+			additionalAttributes.put("encryptionKey", credentialReqestDto.getEncryptionKey());
+			additionalAttributes.put("credentialName", credentialReqestDto.getCredentialType());
+
+			ResponseWrapper<ResidentCredentialResponseDto> responseDto = residentServiceRestClient.postApi(
+					env.getProperty(ApiName.CREDENTIAL_REQ_URL.name()), MediaType.APPLICATION_JSON, requestDto,
+					ResponseWrapper.class);
+			residentCredentialResponseDto = JsonUtil.readValue(
+					JsonUtil.writeValueAsString(responseDto.getResponse()), ResidentCredentialResponseDto.class);
+			additionalAttributes.put(IdType.RID.name(), residentCredentialResponseDto.getRequestId());
+			if (!Utility.isSecureSession()) {
+				sendNotification(dto.getIndividualId(), NotificationTemplateCode.RS_CRE_REQ_SUCCESS,
+						additionalAttributes);
+			}
+
 		} catch (ResidentServiceCheckedException | ApisResourceAccessException e) {
-			if(!Utility.isSecureSession()){
+			if (!Utility.isSecureSession()) {
 				sendNotification(dto.getIndividualId(), NotificationTemplateCode.RS_CRE_REQ_FAILURE, additionalAttributes);
 			}
 			throw new ResidentCredentialServiceException(ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorCode(),
 					ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorMessage(), e);
 		} catch (IOException e) {
-			if(!Utility.isSecureSession()){
+			if (!Utility.isSecureSession()) {
 				sendNotification(dto.getIndividualId(), NotificationTemplateCode.RS_CRE_REQ_FAILURE, additionalAttributes);
 			}
 			throw new ResidentCredentialServiceException(ResidentErrorCode.IO_EXCEPTION.getErrorCode(),

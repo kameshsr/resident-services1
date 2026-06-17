@@ -5,22 +5,24 @@ import lombok.Data;
 @Data
 public class PartnerResponseDto {
 
-	private String partnerID;
+	private String partnerId;
 
 	private String status;
 
-	private String policyGroup;
+	private String policyGroupId;
+	
+	private String policyGroupName;
 
-	private String organizationName;
+	private String orgName;
 
-	private String address;
-
-	private String contactNumber;
-
-	private String emailId;
+	private String emailAddress;
 
 	private String partnerType;
 
 	private Boolean isActive;
+	
+	private String certificateUploadStatus;
+	
+	private String createdDateTime;
 
 }

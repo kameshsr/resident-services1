@@ -153,7 +153,7 @@ public class ResidentCredentialServiceTest {
 		response.setResponse(residentCredentialResponseDto);
 
 		PartnerResponseDto partnerResponseDto = new PartnerResponseDto();
-		partnerResponseDto.setOrganizationName("MOSIP");
+		partnerResponseDto.setOrgName("MOSIP");
 		ResponseWrapper<PartnerResponseDto> partnerResponseDtoResponseWrapper = new ResponseWrapper<>();
 		partnerResponseDtoResponseWrapper.setResponse(partnerResponseDto);
 
@@ -227,7 +227,7 @@ public class ResidentCredentialServiceTest {
 		response.setResponse(residentCredentialResponseDto);
 
 		PartnerResponseDto partnerResponseDto = new PartnerResponseDto();
-		partnerResponseDto.setOrganizationName("MOSIP");
+		partnerResponseDto.setOrgName("MOSIP");
 		ResponseWrapper<PartnerResponseDto> partnerResponseDtoResponseWrapper = new ResponseWrapper<>();
 		partnerResponseDtoResponseWrapper.setResponse(partnerResponseDto);
 
@@ -262,7 +262,7 @@ public class ResidentCredentialServiceTest {
 		response.setResponse(residentCredentialResponseDto);
 
 		PartnerResponseDto partnerResponseDto = new PartnerResponseDto();
-		partnerResponseDto.setOrganizationName("MOSIP");
+		partnerResponseDto.setOrgName("MOSIP");
 		ResponseWrapper<PartnerResponseDto> partnerResponseDtoResponseWrapper = new ResponseWrapper<>();
 		partnerResponseDtoResponseWrapper.setResponse(partnerResponseDto);
 
