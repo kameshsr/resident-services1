@@ -42,8 +42,12 @@ public class PartnersByPartnerType {
     /** Response key holding the total number of partners across all pages. */
     private static final String TOTAL_RESULTS_KEY = "totalResults";
 
-    /** Page size used when the configured value is not a valid number. */
-    private static final int DEFAULT_PAGE_SIZE = 100;
+    /**
+     * Page size used when the configured value is missing or not a valid number.
+     * Kept in sync with the default in the {@code mosip.resident.page.size:25}
+     * property above so both code paths fall back to the same value.
+     */
+    private static final int DEFAULT_PAGE_SIZE = 25;
 
     /** Safety guard to avoid an unbounded loop if the API keeps returning data. */
     private static final int MAX_PAGES = 1000;
