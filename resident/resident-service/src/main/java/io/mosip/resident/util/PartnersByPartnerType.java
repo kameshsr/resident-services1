@@ -64,6 +64,7 @@ public class PartnersByPartnerType {
         int currentPageNo = parseIntOrDefault(pageNo, 0);
         int totalResults = 0;
         int pageCounter = 0;
+        boolean continuePaging = true;
 
         try {
             do {
@@ -107,7 +108,14 @@ public class PartnersByPartnerType {
 
                 currentPageNo++;
                 pageCounter++;
-            } while (mergedPartners.size() < totalResults && pageCounter < MAX_PAGES);
+
+                // Decide whether to fetch another page. Don't rely solely on
+                // totalResults: if the API omits it (defaults to 0) we would
+                // otherwise stop after page 1 and silently truncate the result.
+                boolean reachedKnownTotal = totalResults > 0 && mergedPartners.size() >= totalResults;
+                boolean partialPage = pageData.size() < effectivePageSize;
+                continuePaging = !reachedKnownTotal && !partialPage;
+            } while (continuePaging && pageCounter < MAX_PAGES);
 
         } catch (ApisResourceAccessException e) {
             logger.error("Error occured in accessing partners list from partner management API: {}", e.getMessage(), e);
