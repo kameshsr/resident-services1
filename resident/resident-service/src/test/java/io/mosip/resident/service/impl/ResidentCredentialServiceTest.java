@@ -167,11 +167,6 @@ public class ResidentCredentialServiceTest {
 		requestDto.setRequesttime(DateUtils2.getUTCCurrentDateTimeString());
 		requestDto.setVersion("1.0");
 
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/"
-				+ residentCredentialRequestDto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
-		when(residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class))
-				.thenReturn(partnerResponseDtoResponseWrapper);
 		when(residentServiceRestClient.postApi(any(), any(), any(), any())).thenReturn(response);
 
 		ResidentCredentialResponseDto credentialResponseDto = residentCredentialService
@@ -241,11 +236,6 @@ public class ResidentCredentialServiceTest {
 		requestDto.setRequesttime(DateUtils2.getUTCCurrentDateTimeString());
 		requestDto.setVersion("1.0");
 
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/"
-				+ residentCredentialRequestDto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
-		when(residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class))
-				.thenReturn(partnerResponseDtoResponseWrapper);
 		when(residentServiceRestClient.postApi(any(), any(), any(), any()))
 				.thenThrow(ApisResourceAccessException.class);
 		residentCredentialService.reqCredential(residentCredentialRequestDto);
@@ -276,11 +266,6 @@ public class ResidentCredentialServiceTest {
 		requestDto.setRequesttime(DateUtils2.getUTCCurrentDateTimeString());
 		requestDto.setVersion("1.0");
 
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/"
-				+ residentCredentialRequestDto.getIssuer();
-		URI partnerUri = URI.create(partnerUrl);
-		when(residentServiceRestClient.getApi(partnerUri, ResponseWrapper.class))
-				.thenReturn(partnerResponseDtoResponseWrapper);
 		when(residentServiceRestClient.postApi(any(), any(), any(), any()))
 				.thenReturn(partnerResponseDtoResponseWrapper);
 
