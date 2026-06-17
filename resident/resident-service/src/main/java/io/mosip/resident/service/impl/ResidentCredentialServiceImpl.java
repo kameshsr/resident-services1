@@ -175,7 +175,7 @@ public class ResidentCredentialServiceImpl implements ResidentCredentialService 
 			Map<String, ?> partnerDetail = proxyPartnerManagementService.getPartnerDetailFromPartnerIdAndPartnerType(
 					dto.getIssuer(), "");
 
-			additionalAttributes.put("partnerName", partnerDetail.get(ResidentConstants.ORGANIZATION_NAME));
+			additionalAttributes.put("partnerName", partnerDetail.get(ResidentConstants.ORG_NAME));
 			additionalAttributes.put("encryptionKey", credentialReqestDto.getEncryptionKey());
 			additionalAttributes.put("credentialName", credentialReqestDto.getCredentialType());
 
@@ -306,7 +306,7 @@ public class ResidentCredentialServiceImpl implements ResidentCredentialService 
 		Map<String, ?> partnerDetail = proxyPartnerManagementService.getPartnerDetailFromPartnerIdAndPartnerType(
 				dto.getIssuer(), env.getProperty(ResidentConstants.RESIDENT_SHARE_CREDENTIAL_PARTNER_TYPE,
 						ResidentConstants.AUTH_PARTNER));
-		residentTransactionEntity.setRequestedEntityName((String) partnerDetail.get(ResidentConstants.ORGANIZATION_NAME));
+		residentTransactionEntity.setRequestedEntityName((String) partnerDetail.get(ResidentConstants.ORG_NAME));
 		residentTransactionEntity.setRequestedEntityType((String) partnerDetail.get(ResidentConstants.PARTNER_TYPE));
 		residentTransactionEntity.setConsent(dto.getConsent());
 		return residentTransactionEntity;

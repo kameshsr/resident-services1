@@ -140,7 +140,7 @@ public class OrderCardServiceImpl implements OrderCardService {
 		Map<String, ?> partnerDetail = proxyPartnerManagementService.getPartnerDetailFromPartnerIdAndPartnerType(
 				requestDto.getIssuer(), env.getProperty(ResidentConstants.RESIDENT_ORDER_PHYSICAL_CARD_PARTNER_TYPE,
 						ResidentConstants.PRINT_PARTNER));
-		residentTransactionEntity.setRequestedEntityName((String) partnerDetail.get(ResidentConstants.ORGANIZATION_NAME));
+		residentTransactionEntity.setRequestedEntityName((String) partnerDetail.get(ResidentConstants.ORG_NAME));
 		residentTransactionEntity.setRequestedEntityType((String) partnerDetail.get(ResidentConstants.PARTNER_TYPE));
 		residentTransactionEntity.setTokenId(availableClaimUtility.getResidentIdaToken());
 		residentTransactionEntity.setAuthTypeCode(identityServiceImpl.getResidentAuthenticationMode());
@@ -321,7 +321,7 @@ public class OrderCardServiceImpl implements OrderCardService {
 		Map<String, ?> partnerDetail = proxyPartnerManagementService.getPartnerDetailFromPartnerIdAndPartnerType(
 				partnerId, env.getProperty(ResidentConstants.RESIDENT_ORDER_PHYSICAL_CARD_PARTNER_TYPE,
 						ResidentConstants.PRINT_PARTNER));
-		residentTransactionEntity.setRequestedEntityName((String) partnerDetail.get(ResidentConstants.ORGANIZATION_NAME));
+		residentTransactionEntity.setRequestedEntityName((String) partnerDetail.get(ResidentConstants.ORG_NAME));
 		residentTransactionEntity.setRequestedEntityType((String) partnerDetail.get(ResidentConstants.PARTNER_TYPE));
 		residentTransactionEntity.setTokenId(availableClaimUtility.getResidentIdaToken());
 		residentTransactionEntity.setAuthTypeCode(identityServiceImpl.getResidentAuthenticationMode());

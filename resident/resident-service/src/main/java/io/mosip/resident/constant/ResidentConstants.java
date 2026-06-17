@@ -298,7 +298,7 @@ public class ResidentConstants {
     public static final String PARTNERS = "partners";
 	public static final String PMS_PARTNER_ID = "partnerID";
     public static final String PARTNER_TYPE = "partnerType";
-	public static final String ORGANIZATION_NAME = "orgName";
+	public static final String ORG_NAME = "orgName";
 	public static final String AUTH_PARTNER = "Auth_Partner";
 	public static final String PRINT_PARTNER = "Print_Partner";
 	public static final String RESIDENT_SHARE_CREDENTIAL_PARTNER_TYPE = "resident.share-credential.partner.type";
