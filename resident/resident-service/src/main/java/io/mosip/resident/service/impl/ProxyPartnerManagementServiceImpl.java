@@ -35,7 +35,7 @@ public class ProxyPartnerManagementServiceImpl implements ProxyPartnerManagement
 	@Override
 	public ResponseWrapper<?> getPartnersByPartnerType(String partnerType)
 			throws ResidentServiceCheckedException {
-		return partnersByPartnerTypeCache.getPartnersByPartnerType(partnerType, ApiName.PARTNER_API_NEW_URL);
+		return partnersByPartnerTypeCache.getPartnersByPartnerType(partnerType, ApiName.PARTNER_API_URL);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -44,7 +44,7 @@ public class ProxyPartnerManagementServiceImpl implements ProxyPartnerManagement
 	public Map<String, ?> getPartnerDetailFromPartnerIdAndPartnerType(String partnerId, String partnerType) {
 		ResponseWrapper<?> response = null;
 		try {
-			response = partnersByPartnerTypeCache.getPartnersByPartnerIdAndPartnerType(partnerId, partnerType, ApiName.PARTNER_API_NEW_URL);
+			response = partnersByPartnerTypeCache.getPartnersByPartnerIdAndPartnerType(partnerId, partnerType, ApiName.PARTNER_API_URL);
 		} catch (ResidentServiceCheckedException e) {
 			throw new ResidentServiceException(ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorCode(),
 					ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorMessage(), e);
