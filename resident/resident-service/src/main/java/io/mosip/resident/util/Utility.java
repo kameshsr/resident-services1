@@ -70,6 +70,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.chrono.Chronology;
@@ -684,6 +685,34 @@ public class Utility {
 		}
 		logger.debug("Utilitiy::getClientIp()::exit - excecuted till end");
 		return req.getRemoteAddr();
+	}
+
+	/**
+	 * Returns a one-way SHA-256 hash of the client's IP address so that the raw IP
+	 * is never persisted in plaintext (ref: MOSIP-41105 - data minimization /
+	 * sensitive data protection). The hash still allows correlation of sessions
+	 * from the same source without exposing the actual IP on DB compromise.
+	 *
+	 * @param req the incoming HTTP request
+	 * @return SHA-256 hash (plain text/hex) of the client IP, or {@code null} if it
+	 *         could not be resolved
+	 */
+	public String getHashedClientIp(HttpServletRequest req) {
+		logger.debug("Utilitiy::getHashedClientIp()::entry");
+		String clientIp = getClientIp(req);
+		if (clientIp == null || clientIp.isEmpty()) {
+			logger.debug("Utilitiy::getHashedClientIp()::exit - client ip is empty");
+			return null;
+		}
+		try {
+			String hashedIp = HMACUtils2.digestAsPlainText(clientIp.getBytes(StandardCharsets.UTF_8));
+			logger.debug("Utilitiy::getHashedClientIp()::exit");
+			return hashedIp;
+		} catch (NoSuchAlgorithmException e) {
+			logger.error("Utilitiy::getHashedClientIp()::error while hashing client ip - "
+					+ ExceptionUtils.getStackTrace(e));
+			return null;
+		}
 	}
 
 	public String getCardOrderTrackingId(String transactionId, String individualId)
