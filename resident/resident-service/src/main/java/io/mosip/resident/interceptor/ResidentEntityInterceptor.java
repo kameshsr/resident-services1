@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import io.mosip.commons.khazana.config.LoggerConfiguration;
 import io.mosip.kernel.core.logger.spi.Logger;
 import io.mosip.resident.constant.ResidentErrorCode;
+import io.mosip.resident.entity.ResidentSessionEntity;
 import io.mosip.resident.entity.ResidentTransactionEntity;
 import io.mosip.resident.exception.ResidentServiceException;
 import io.mosip.resident.helper.ObjectStoreHelper;
@@ -33,6 +34,10 @@ public class ResidentEntityInterceptor implements Interceptor, Serializable {
 	private static final long serialVersionUID = 3428378823034671471L;
 
 	private static final String INDIVIDUAL_ID = "individualId";
+
+	private static final String IP_ADDRESS = "ipAddress";
+
+	private static final String HOST = "host";
 
 	@Autowired
 	private transient ObjectStoreHelper objectStoreHelper;
@@ -52,6 +57,9 @@ public class ResidentEntityInterceptor implements Interceptor, Serializable {
 			if (entity instanceof ResidentTransactionEntity) {
 				List<String> propertyNamesList = Arrays.asList(propertyNames);
 				encryptDataOnSave(id, state, propertyNamesList, types, (ResidentTransactionEntity) entity);
+			} else if (entity instanceof ResidentSessionEntity) {
+				List<String> propertyNamesList = Arrays.asList(propertyNames);
+				encryptSessionDataOnSave(state, propertyNamesList, (ResidentSessionEntity) entity);
 			}
 		} catch (ResidentServiceException e) {
 			logger.error(ResidentErrorCode.ENCRYPT_DECRYPT_ERROR.getErrorCode(),
@@ -72,6 +80,39 @@ public class ResidentEntityInterceptor implements Interceptor, Serializable {
 			state[indexOfData] = encryptedData;
 		}
 	}
+
+	/**
+	 * Encrypts the session's identifying network attributes (client IP address and
+	 * host) before they are persisted so that they are never stored in plaintext
+	 * (ref: MOSIP-41105). Reversible keymanager encryption is used (same mechanism
+	 * as individualId) so the original values can still be retrieved when genuinely
+	 * required.
+	 */
+	private void encryptSessionDataOnSave(Object[] state, List<String> propertyNamesList,
+			ResidentSessionEntity sessionEntity) throws ResidentServiceException {
+		if (Objects.nonNull(sessionEntity.getIpAddress())) {
+			String encryptedIpAddress = encryptSessionValue(sessionEntity.getIpAddress());
+			sessionEntity.setIpAddress(encryptedIpAddress);
+			updateState(state, propertyNamesList, IP_ADDRESS, encryptedIpAddress);
+		}
+		if (Objects.nonNull(sessionEntity.getHost())) {
+			String encryptedHost = encryptSessionValue(sessionEntity.getHost());
+			sessionEntity.setHost(encryptedHost);
+			updateState(state, propertyNamesList, HOST, encryptedHost);
+		}
+	}
+
+	private String encryptSessionValue(String value) throws ResidentServiceException {
+		String encodedValue = Base64.encodeBase64String(value.getBytes());
+		return objectStoreHelper.encryptDecryptData(encodedValue, true, appId, refId);
+	}
+
+	private void updateState(Object[] state, List<String> propertyNamesList, String propertyName, String value) {
+		int indexOfData = propertyNamesList.indexOf(propertyName);
+		if (indexOfData >= 0) {
+			state[indexOfData] = value;
+		}
+	}
 	
 	@Override
 	public boolean onLoad(Object entity, Object id, Object[] state, String[] propertyNames, Type[] types) {
@@ -82,6 +123,9 @@ public class ResidentEntityInterceptor implements Interceptor, Serializable {
 				if (Objects.nonNull(state[indexOfData])) {
 					decryptDataOnLoad(id, state, propertyNamesList, types, (ResidentTransactionEntity) entity);
 				}
+			} else if (entity instanceof ResidentSessionEntity) {
+				List<String> propertyNamesList = Arrays.asList(propertyNames);
+				decryptSessionDataOnLoad(state, propertyNamesList, (ResidentSessionEntity) entity);
 			}
 		} catch (ResidentServiceException e) {
 			logger.error(ResidentErrorCode.ENCRYPT_DECRYPT_ERROR.getErrorCode(),
@@ -97,8 +141,27 @@ public class ResidentEntityInterceptor implements Interceptor, Serializable {
 		if(entity instanceof ResidentTransactionEntity) {
 			List<String> propertyNamesList = Arrays.asList(propertyNames);
 			encryptDataOnSave(id, currentState, propertyNamesList, types, (ResidentTransactionEntity) entity);
+		} else if (entity instanceof ResidentSessionEntity) {
+			List<String> propertyNamesList = Arrays.asList(propertyNames);
+			encryptSessionDataOnSave(currentState, propertyNamesList, (ResidentSessionEntity) entity);
 		}
 		return Interceptor.super.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
+	}
+
+	private void decryptSessionDataOnLoad(Object[] state, List<String> propertyNamesList,
+			ResidentSessionEntity sessionEntity) throws ResidentServiceException {
+		int ipIndex = propertyNamesList.indexOf(IP_ADDRESS);
+		if (ipIndex >= 0 && Objects.nonNull(state[ipIndex])) {
+			String decryptedIpAddress = tryDecryption((String) state[ipIndex], IP_ADDRESS);
+			sessionEntity.setIpAddress(decryptedIpAddress);
+			state[ipIndex] = decryptedIpAddress;
+		}
+		int hostIndex = propertyNamesList.indexOf(HOST);
+		if (hostIndex >= 0 && Objects.nonNull(state[hostIndex])) {
+			String decryptedHost = tryDecryption((String) state[hostIndex], HOST);
+			sessionEntity.setHost(decryptedHost);
+			state[hostIndex] = decryptedHost;
+		}
 	}
 
 	private <T extends ResidentTransactionEntity> void decryptDataOnLoad(Object id, Object[] state,

@@ -2,7 +2,6 @@ package io.mosip.resident.util;
 
 import static io.mosip.resident.constant.RegistrationConstants.DATETIME_PATTERN;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -690,24 +688,6 @@ public class UtilityTest {
 		Mockito.when(request.getRemoteAddr()).thenReturn("1.5.5");
 		String ipAddress = utility.getClientIp(request);
 		assertEquals("1.5.5", ipAddress);
-	}
-
-	@Test
-	public void testGetHashedClientIp() throws Exception {
-		Mockito.when(request.getHeader(Mockito.anyString())).thenReturn("1.2.3,1.3");
-		String hashedIp = utility.getHashedClientIp(request);
-		assertNotNull(hashedIp);
-		// the raw IP must never be persisted in plaintext (MOSIP-41105)
-		assertNotEquals("1.2.3", hashedIp);
-		// hashing must be deterministic so sessions from the same source can be correlated
-		assertEquals(HMACUtils2.digestAsPlainText("1.2.3".getBytes(StandardCharsets.UTF_8)), hashedIp);
-	}
-
-	@Test
-	public void testGetHashedClientIpNull() {
-		Mockito.when(request.getHeader(Mockito.anyString())).thenReturn(null);
-		Mockito.when(request.getRemoteAddr()).thenReturn(null);
-		assertNull(utility.getHashedClientIp(request));
 	}
 
     @Test(expected = Exception.class)

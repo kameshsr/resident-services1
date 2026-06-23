@@ -106,9 +106,10 @@ public class LoginCheck {
 		}
 		if(idaToken!=null && !idaToken.isEmpty() && sessionId != null && !sessionId.isEmpty()) {
 			audit.setAuditRequestDto(AuditEnum.LOGIN_REQ_SUCCESS);
-			// MOSIP-41105: persist a one-way SHA-256 hash of the client IP instead of plaintext
+			// MOSIP-41105: the raw client IP and host are encrypted before persistence by
+			// ResidentEntityInterceptor (keymanager), so they are never stored in plaintext
 			ResidentSessionEntity newSessionData = new ResidentSessionEntity(sessionId, idaToken, DateUtils2.getUTCCurrentDateTime(),
-					utility.getHashedClientIp(req), req.getRemoteHost(), getMachineType(req));
+					utility.getClientIp(req), req.getRemoteHost(), getMachineType(req));
 			residentSessionRepository.save(newSessionData);
 		} else {
 			audit.setAuditRequestDto(AuditEnum.LOGIN_REQ_FAILURE);

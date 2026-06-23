@@ -16,8 +16,8 @@ CREATE TABLE resident.resident_session(
 	session_id character varying(128) NOT NULL,
     ida_token character varying(128) NOT NULL,
     login_dtimes timestamp,
-	ip_address character varying(128),
-	host character varying(128),
+	ip_address character varying(1024),
+	host character varying(1024),
 	machine_type character varying(100),
     CONSTRAINT pk_session_id PRIMARY KEY (session_id)
 );
@@ -26,8 +26,8 @@ COMMENT ON TABLE resident.resident_session IS 'This Table is used to save the  u
 COMMENT ON COLUMN resident.resident_session.session_id IS 'The unique session identifier for each login';
 COMMENT ON COLUMN resident.resident_session.ida_token IS 'The unique identifier for each user';
 COMMENT ON COLUMN resident.resident_session.login_dtimes IS 'The time when the user last logged in';
-COMMENT ON COLUMN resident.resident_session.ip_address IS 'The ip_address of device from which the user logged in';
-COMMENT ON COLUMN resident.resident_session.host IS 'The host of the site';
+COMMENT ON COLUMN resident.resident_session.ip_address IS 'The encrypted ip_address of device from which the user logged in (MOSIP-41105)';
+COMMENT ON COLUMN resident.resident_session.host IS 'The encrypted host of device from which the user logged in (MOSIP-41105)';
 COMMENT ON COLUMN resident.resident_session.machine_type IS 'The OS of device used for accessing the portal/app';
 
 -- Adding index to ida_token column
@@ -36,3 +36,6 @@ GRANT SELECT, INSERT, REFERENCES, UPDATE, DELETE
     ON resident.resident_session
     TO :dbuname;
 ALTER TABLE resident.resident_session alter column machine_type type varchar(100);
+-- MOSIP-41105: ip_address and host are now stored encrypted (reversible keymanager encryption); widen columns to hold ciphertext
+ALTER TABLE resident.resident_session alter column ip_address type character varying(1024);
+ALTER TABLE resident.resident_session alter column host type character varying(1024);
