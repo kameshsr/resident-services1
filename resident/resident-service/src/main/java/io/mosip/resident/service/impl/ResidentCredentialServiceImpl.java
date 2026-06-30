@@ -172,7 +172,7 @@ public class ResidentCredentialServiceImpl implements ResidentCredentialService 
 		PartnerResponseDto partnerResponseDto = new PartnerResponseDto();
 		CredentialReqestDto credentialReqestDto = new CredentialReqestDto();
 		Map<String, Object> additionalAttributes = new HashMap<>();
-		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL.name()) + "/" + dto.getIssuer();
+		String partnerUrl = env.getProperty(ApiName.PARTNER_API_URL_V2.name()) + "/" + dto.getIssuer();
 		URI partnerUri = URI.create(partnerUrl);
 		try {
 				credentialReqestDto = prepareCredentialRequest(dto, individualId);
