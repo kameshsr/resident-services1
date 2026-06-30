@@ -32,6 +32,9 @@ public class PartnersByPartnerType {
     private static final String DATA = "data";
     private static final String TOTAL_RESULTS = "totalResults";
 
+    /** Fallback page size used when the configured value is invalid (zero or negative). */
+    private static final int DEFAULT_PAGE_SIZE = 100;
+
     /**
      * Number of records fetched per page from the partner manager v2 API.
      * Configurable via property; defaults to 100.
@@ -52,6 +55,14 @@ public class PartnersByPartnerType {
         int pageNo = 0;
         int totalResults = 0;
 
+        int effectivePageSize = pageSize;
+        if (effectivePageSize <= 0) {
+            logger.warn(String.format(
+                    "Invalid resident.partner.list.page.size [%d]; falling back to default [%d]",
+                    pageSize, DEFAULT_PAGE_SIZE));
+            effectivePageSize = DEFAULT_PAGE_SIZE;
+        }
+
         try {
             do {
                 List<String> pathsegements = null;
@@ -64,7 +75,7 @@ public class PartnersByPartnerType {
                     queryParamValue.add(partnerType.get());
                 }
                 queryParamName.add(PAGE_SIZE);
-                queryParamValue.add(pageSize);
+                queryParamValue.add(effectivePageSize);
                 queryParamName.add(PAGE_NO);
                 queryParamValue.add(pageNo);
 
