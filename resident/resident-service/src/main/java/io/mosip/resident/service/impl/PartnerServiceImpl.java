@@ -2,6 +2,7 @@ package io.mosip.resident.service.impl;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,12 @@ public class PartnerServiceImpl implements PartnerService {
                 ResponseWrapper<?> responseWrapper = proxyPartnerManagementService.getPartnersByPartnerType(partnerType);
                 if (responseWrapper != null) {
                     Map<String, Object> partnerResponse = new LinkedHashMap<>((Map<String, Object>) responseWrapper.getResponse());
-                    ArrayList<Object> partners = (ArrayList<Object>) partnerResponse.get(ResidentConstants.PARTNERS);
-                    for (Object partner : partners) {
-                        Map<String, Object> individualPartner = new LinkedHashMap<>((Map<String, Object>) partner);
-                        partnerIds.add(individualPartner.get(ResidentConstants.PMS_PARTNER_ID).toString());
+                    List<Object> partners = (List<Object>) partnerResponse.get(ResidentConstants.PARTNERS_DATA);
+                    if (partners != null) {
+                        for (Object partner : partners) {
+                            Map<String, Object> individualPartner = new LinkedHashMap<>((Map<String, Object>) partner);
+                            partnerIds.add(individualPartner.get(ResidentConstants.PMS_PARTNER_ID_V2).toString());
+                        }
                     }
                 }
             }
