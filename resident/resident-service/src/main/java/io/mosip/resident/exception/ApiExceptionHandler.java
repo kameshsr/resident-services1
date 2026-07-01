@@ -279,11 +279,13 @@ public class ApiExceptionHandler {
 			return  new ResponseEntity<ResponseWrapper<ServiceError>>(getAuthFailedResponse(), HttpStatus.UNAUTHORIZED);
 		}
 		ResponseWrapper<ServiceError> errorResponse = setErrors(httpServletRequest);
-		ServiceError error = new ServiceError(ResidentErrorCode.BAD_REQUEST.getErrorCode(), exception.getMessage());
+		// Do not reflect the raw exception message back to the client: it can echo
+		// attacker-controlled request content (XSS / info disclosure). Use a static message.
+		ServiceError error = new ServiceError(ResidentErrorCode.BAD_REQUEST.getErrorCode(), ResidentErrorCode.BAD_REQUEST.getErrorMessage());
 		errorResponse.getErrors().add(error);
 		ExceptionUtils.logRootCause(exception);
 		logStackTrace(exception);
-		if(error.getMessage().contains(NO_STATIC_RESOURCE)){
+		if(exception.getMessage() != null && exception.getMessage().contains(NO_STATIC_RESOURCE)){
 			return createResponseEntity(errorResponse, exception, HttpStatus.NOT_FOUND);
 		}
 		return createResponseEntity(errorResponse, exception, HttpStatus.OK);
@@ -349,7 +351,7 @@ public class ApiExceptionHandler {
 			return  new ResponseEntity<ResponseWrapper<ServiceError>>(getAuthFailedResponse(), HttpStatus.UNAUTHORIZED);
 		}
 		ResponseWrapper<ServiceError> errorResponse = setErrors(httpServletRequest);
-		ServiceError error = new ServiceError(ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorCode(), e.getMessage());
+		ServiceError error = new ServiceError(ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorCode(), ResidentErrorCode.API_RESOURCE_ACCESS_EXCEPTION.getErrorMessage());
 		errorResponse.getErrors().add(error);
 		ExceptionUtils.logRootCause(e);
 		logStackTrace(e);
@@ -360,7 +362,7 @@ public class ApiExceptionHandler {
 	public ResponseEntity<ResponseWrapper<ServiceError>> handleAccessDeniedException(
 			final HttpServletRequest httpServletRequest, final AccessDeniedException e) throws IOException {
 		ResponseWrapper<ServiceError> errorResponse = setErrors(httpServletRequest);
-		ServiceError error = new ServiceError(ResidentErrorCode.FORBIDDEN.getErrorCode(), e.getMessage());
+		ServiceError error = new ServiceError(ResidentErrorCode.FORBIDDEN.getErrorCode(), ResidentErrorCode.FORBIDDEN.getErrorMessage());
 		errorResponse.getErrors().add(error);
 		ExceptionUtils.logRootCause(e);
 		logStackTrace(e);
