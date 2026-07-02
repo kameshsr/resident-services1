@@ -1,6 +1,8 @@
 package io.mosip.resident.service.impl;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -192,7 +194,8 @@ public class OrderCardServiceImpl implements OrderCardService {
 				queryParams.put("error_code", errorCode);
 				queryParams.put("error_message", errorMessage);
 				for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-					String keyValueParam = entry.getKey() + "=" + entry.getValue();
+					String keyValueParam = URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "="
+							+ URLEncoder.encode(String.valueOf(entry.getValue()), StandardCharsets.UTF_8);
 					if (!builder.toString().isEmpty()) {
 						builder.append("&");
 					}
@@ -212,7 +215,8 @@ public class OrderCardServiceImpl implements OrderCardService {
 					queryParams.put("error_code", responseWrapper.getErrors().get(0).getErrorCode());
 					queryParams.put("error_message", responseWrapper.getErrors().get(0).getMessage());
 					for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-						String keyValueParam = entry.getKey() + "=" + entry.getValue();
+						String keyValueParam = URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "="
+							+ URLEncoder.encode(String.valueOf(entry.getValue()), StandardCharsets.UTF_8);
 						if (!builder.toString().isEmpty()) {
 							builder.append("&");
 						}
@@ -229,7 +233,8 @@ public class OrderCardServiceImpl implements OrderCardService {
 					queryParams.put("residentFullAddress", address);
 					queryParams.put("eventId", residentTransactionEntity.getEventId());
 					for (Map.Entry<String, String> entry : queryParams.entrySet()) {
-						String keyValueParam = entry.getKey() + "=" + entry.getValue();
+						String keyValueParam = URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8) + "="
+							+ URLEncoder.encode(String.valueOf(entry.getValue()), StandardCharsets.UTF_8);
 						if (!builder.toString().isEmpty()) {
 							builder.append("&");
 						}

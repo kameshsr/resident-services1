@@ -70,6 +70,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.chrono.Chronology;
@@ -463,7 +465,7 @@ public class Utility {
 	}
 
 	public String createTrackServiceRequestLink(String eventId) {
-		return trackServiceUrl + eventId;
+		return trackServiceUrl + URLEncoder.encode(String.valueOf(eventId), StandardCharsets.UTF_8);
 	}
 
 	public String createDownloadCardLinkFromEventId(ResidentTransactionEntity residentTransactionEntity) {
