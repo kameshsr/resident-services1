@@ -10,9 +10,6 @@ TO residentuser;
 
 ALTER TABLE resident.resident_session alter column machine_type type varchar(100);
 
--- Dropping ip_address and host columns as per security review
-ALTER TABLE resident.resident_session DROP COLUMN IF EXISTS ip_address;
-ALTER TABLE resident.resident_session DROP COLUMN IF EXISTS host;
 -- Adding index to ida_token column
 CREATE INDEX idx_resident_user_actions_ida_token ON resident.resident_user_actions (ida_token);
 GRANT SELECT, INSERT, REFERENCES, UPDATE, DELETE
