@@ -199,6 +199,7 @@ public class ObjectStoreHelper {
 
 
 	public String decryptData(String data, String applicationId, String referenceId){
+		
 		return encryptDecryptData(data, false, applicationId, referenceId);
 	}
 
@@ -218,9 +219,17 @@ public class ObjectStoreHelper {
 			request.setTimeStamp(DateUtils2.getUTCCurrentDateTime());
 			RequestWrapper<CryptomanagerRequestDto> requestWrapper = new RequestWrapper<>();
 			requestWrapper.setRequest(request);
+			System.out.println("Request to cryptomanager: ");
+			System.out.println("Request: " + requestWrapper);
+			System.out.println("data: " + data);
+			System.out.println("toEncrypt: " + toEncrypt);
+			System.out.println("applicationId: " + applicationId);
+			System.out.println("referenceId: " + referenceId);
 			ResponseWrapper<Map<String, Object>> responseWrapper = restClient.postApi(
 					toEncrypt ? encryptUri : decryptUri, MediaType.APPLICATION_JSON_UTF8, requestWrapper,
 					ResponseWrapper.class);
+			System.out.println("Response from cryptomanager: ");
+			System.out.println("Response: " + responseWrapper);
 			if (Objects.nonNull(responseWrapper.getErrors()) && !responseWrapper.getErrors().isEmpty()) {
 				logger.error(LoggerFileConstant.SESSIONID.toString(), LoggerFileConstant.APPLICATIONID.toString(),
 						LoggerFileConstant.APPLICATIONID.toString(), responseWrapper.getErrors().get(0).getMessage() + " \n at: " + Thread.getAllStackTraces());
