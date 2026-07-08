@@ -128,7 +128,7 @@ public class UserInfoUtility {
     }
 
     public String decryptPayload(String payload) {
-        return objectStoreHelper.decryptData(payload, this.env.getProperty(ResidentConstants.RESIDENT_APP_ID),
+        return objectStoreHelper.decryptData(payload, "RESIDENT",
                 this.env.getProperty(ResidentConstants.IDP_REFERENCE_ID));
     }
 }
