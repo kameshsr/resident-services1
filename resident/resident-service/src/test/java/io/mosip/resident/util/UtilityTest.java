@@ -808,7 +808,9 @@ public class UtilityTest {
 		}
 
 		when(pdfGenerator.generate(any(InputStream.class))).thenReturn(outputStream);
-		when(utilities.getTotalNumberOfPageInPdf(Mockito.any())).thenReturn(1);
+		when(utilities.appendBlankPageIfSignRegionOccupied(Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyInt())).thenAnswer(invocation -> invocation.getArgument(0));
+		when(utilities.getPageCountOfPdf(Mockito.any())).thenReturn(1);
 
 		// Mocking response from the REST client
 		ResponseWrapper<SignatureResponseDto> responseWrapper = new ResponseWrapper<>();
@@ -861,7 +863,9 @@ public class UtilityTest {
 		}
 
 		when(pdfGenerator.generate(any(InputStream.class))).thenReturn(outputStream);
-		when(utilities.getTotalNumberOfPageInPdf(Mockito.any())).thenReturn(1);
+		when(utilities.appendBlankPageIfSignRegionOccupied(Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
+				Mockito.anyInt(), Mockito.anyInt())).thenAnswer(invocation -> invocation.getArgument(0));
+		when(utilities.getPageCountOfPdf(Mockito.any())).thenReturn(1);
 
 		// Mocking response from the REST client
 		ResponseWrapper<SignatureResponseDto> responseWrapper = new ResponseWrapper<>();

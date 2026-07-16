@@ -27,6 +27,8 @@ import io.mosip.resident.exception.VidCreationException;
 import lombok.Data;
 import org.apache.pdfbox.io.MemoryUsageSetting;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.text.PDFTextStripperByArea;
 import org.assertj.core.util.Lists;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -39,6 +41,7 @@ import org.springframework.web.client.RestTemplate;
 
 import jakarta.annotation.PostConstruct;
 
+import java.awt.geom.Rectangle2D;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -73,6 +76,7 @@ import static io.mosip.resident.constant.ResidentConstants.TRANSACTION_TYPE_CODE
 @Data
 public class Utilities {
 	private static final String CREATE_DATE_TIMES = "createdDateTimes";
+	private static final String SIGNATURE_REGION = "signatureRegion";
 	private final Logger logger = LoggerConfiguration.logConfig(Utilities.class);
 	/** The reg proc logger. */
 	private static final String sourceStr = "source";
@@ -423,10 +427,51 @@ public class Utilities {
 		return getPageCountWithPDDocument(pdfBytes);
 	}
 
+	public int getPageCountOfPdf(byte[] pdfBytes) throws IOException {
+		return getPageCountWithPDDocument(pdfBytes);
+	}
+
 	private static int getPageCountWithPDDocument(byte[] pdfBytes) throws IOException {
 		try (InputStream inputStream = new ByteArrayInputStream(pdfBytes);
 			 PDDocument document = PDDocument.load(inputStream, MemoryUsageSetting.setupTempFileOnly())) {
 			return document.getNumberOfPages();
+		}
+	}
+
+	/**
+	 * Checks whether the visible-signature rectangle on the last page of the PDF
+	 * already contains content (text). If it does, appends a blank page (same size
+	 * as the last page) so the signature can be stamped without overlapping content.
+	 *
+	 * @param pdfBytes the generated (unsigned) PDF
+	 * @param lowerLeftX signature rectangle lower-left x (PDF coordinates, origin bottom-left)
+	 * @param lowerLeftY signature rectangle lower-left y
+	 * @param upperRightX signature rectangle upper-right x
+	 * @param upperRightY signature rectangle upper-right y
+	 * @return the original bytes if the region is free, otherwise the PDF with one blank page appended
+	 */
+	public byte[] appendBlankPageIfSignRegionOccupied(byte[] pdfBytes, int lowerLeftX, int lowerLeftY,
+			int upperRightX, int upperRightY) throws IOException {
+		try (InputStream inputStream = new ByteArrayInputStream(pdfBytes);
+			 PDDocument document = PDDocument.load(inputStream, MemoryUsageSetting.setupTempFileOnly())) {
+			PDPage lastPage = document.getPage(document.getNumberOfPages() - 1);
+			float pageHeight = lastPage.getMediaBox().getHeight();
+
+			// PDF rectangle origin is bottom-left; PDFTextStripperByArea expects top-left origin
+			PDFTextStripperByArea stripper = new PDFTextStripperByArea();
+			stripper.addRegion(SIGNATURE_REGION,
+					new Rectangle2D.Float(lowerLeftX, pageHeight - upperRightY,
+							(float) upperRightX - lowerLeftX, (float) upperRightY - lowerLeftY));
+			stripper.extractRegions(lastPage);
+
+			if (stripper.getTextForRegion(SIGNATURE_REGION).trim().isEmpty()) {
+				return pdfBytes;
+			}
+			logger.debug("Utilities::appendBlankPageIfSignRegionOccupied()::signature region occupied, appending blank page");
+			document.addPage(new PDPage(lastPage.getMediaBox()));
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			document.save(outputStream);
+			return outputStream.toByteArray();
 		}
 	}
 	@PostConstruct

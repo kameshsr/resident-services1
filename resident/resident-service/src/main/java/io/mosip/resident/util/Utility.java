@@ -483,15 +483,20 @@ public class Utility {
 		byte[] pdfSignatured = null;
 		try {
 			ByteArrayOutputStream pdfValue = (ByteArrayOutputStream) pdfGenerator.generate(in);
+			int lowerLeftX = Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.LOWER_LEFT_X)));
+			int lowerLeftY = Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.LOWER_LEFT_Y)));
+			int upperRightX = Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.UPPER_RIGHT_X)));
+			int upperRightY = Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.UPPER_RIGHT_Y)));
+			// Append a blank page if the signature rectangle on the last page already has
+			// content, so the visible signature never overlaps the document content
+			byte[] pdfBytes = utilities.appendBlankPageIfSignRegionOccupied(pdfValue.toByteArray(),
+					lowerLeftX, lowerLeftY, upperRightX, upperRightY);
 			PDFSignatureRequestDto request = new PDFSignatureRequestDto(
-					Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.LOWER_LEFT_X))),
-					Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.LOWER_LEFT_Y))),
-					Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.UPPER_RIGHT_X))),
-					Integer.parseInt(Objects.requireNonNull(env.getProperty(ResidentConstants.UPPER_RIGHT_Y))),
-					env.getProperty(ResidentConstants.REASON), utilities.getTotalNumberOfPageInPdf(pdfValue), password);
+					lowerLeftX, lowerLeftY, upperRightX, upperRightY,
+					env.getProperty(ResidentConstants.REASON), utilities.getPageCountOfPdf(pdfBytes), password);
 			request.setApplicationId(env.getProperty(ResidentConstants.SIGN_PDF_APPLICATION_ID));
 			request.setReferenceId(env.getProperty(ResidentConstants.SIGN_PDF_REFERENCE_ID));
-			request.setData(org.apache.commons.codec.binary.Base64.encodeBase64String(pdfValue.toByteArray()));
+			request.setData(org.apache.commons.codec.binary.Base64.encodeBase64String(pdfBytes));
 			DateTimeFormatter format = DateTimeFormatter.ofPattern(Objects.requireNonNull(env.getProperty(DATETIME_PATTERN)));
 			LocalDateTime localdatetime = LocalDateTime
 					.parse(DateUtils2.getUTCCurrentDateTimeString(Objects.requireNonNull(env.getProperty(DATETIME_PATTERN))), format);
