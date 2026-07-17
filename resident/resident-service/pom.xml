@@ -16,7 +16,7 @@
         <commons.packet.manager.version>1.3.1-rc.1</commons.packet.manager.version>
         <kernel.core.version>1.3.1-rc.1</kernel.core.version>
         <kernel.virusscanner.clamav.version>1.3.1-rc.1</kernel.virusscanner.clamav.version>
-        <kernel.authcodeflowproxy.api.version>1.3.1</kernel.authcodeflowproxy.api.version>
+        <kernel.authcodeflowproxy.api.version>1.4.0-SNAPSHOT</kernel.authcodeflowproxy.api.version>
         <kernel.parent.version>1.3.1-rc.1</kernel.parent.version>
         <kernel-cbeffutil-api.version>1.3.1</kernel-cbeffutil-api.version>
         <kernel.khazana.version>1.3.2-rc.1</kernel.khazana.version>
