@@ -808,9 +808,10 @@ public class UtilityTest {
 		}
 
 		when(pdfGenerator.generate(any(InputStream.class))).thenReturn(outputStream);
+		byte[] appendedPdfBytes = "Appended PDF Content".getBytes();
 		when(utilities.appendBlankPageIfSignRegionOccupied(Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyInt())).thenAnswer(invocation -> invocation.getArgument(0));
-		when(utilities.getPageCountOfPdf(Mockito.any())).thenReturn(1);
+				Mockito.anyInt(), Mockito.anyInt())).thenReturn(appendedPdfBytes);
+		when(utilities.getPageCountOfPdf(appendedPdfBytes)).thenReturn(1);
 
 		// Mocking response from the REST client
 		ResponseWrapper<SignatureResponseDto> responseWrapper = new ResponseWrapper<>();
@@ -833,6 +834,12 @@ public class UtilityTest {
 
 		// Assertions
 		assertNotNull(signaturedPdf);
+		org.mockito.Mockito.verify(utilities).getPageCountOfPdf(appendedPdfBytes);
+		
+		org.mockito.ArgumentCaptor<io.mosip.kernel.core.http.RequestWrapper> requestCaptor = org.mockito.ArgumentCaptor.forClass(io.mosip.kernel.core.http.RequestWrapper.class);
+		org.mockito.Mockito.verify(residentServiceRestClient).postApi(any(), any(), requestCaptor.capture(), any());
+		io.mosip.kernel.signature.dto.PDFSignatureRequestDto capturedRequest = (io.mosip.kernel.signature.dto.PDFSignatureRequestDto) requestCaptor.getValue().getRequest();
+		assertEquals(org.apache.commons.codec.binary.Base64.encodeBase64String(appendedPdfBytes), capturedRequest.getData());
 
 		outputStream.close();
 	}
@@ -863,9 +870,10 @@ public class UtilityTest {
 		}
 
 		when(pdfGenerator.generate(any(InputStream.class))).thenReturn(outputStream);
+		byte[] appendedPdfBytes = "Appended PDF Content".getBytes();
 		when(utilities.appendBlankPageIfSignRegionOccupied(Mockito.any(), Mockito.anyInt(), Mockito.anyInt(),
-				Mockito.anyInt(), Mockito.anyInt())).thenAnswer(invocation -> invocation.getArgument(0));
-		when(utilities.getPageCountOfPdf(Mockito.any())).thenReturn(1);
+				Mockito.anyInt(), Mockito.anyInt())).thenReturn(appendedPdfBytes);
+		when(utilities.getPageCountOfPdf(appendedPdfBytes)).thenReturn(1);
 
 		// Mocking response from the REST client
 		ResponseWrapper<SignatureResponseDto> responseWrapper = new ResponseWrapper<>();
