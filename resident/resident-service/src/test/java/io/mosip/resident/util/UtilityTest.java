@@ -783,7 +783,7 @@ public class UtilityTest {
 	}
 
 	@Test
-	public void testSignPdfSuccess() throws Exception {
+	public void should_returnSignaturedPdf_when_pdfIsSignedSuccessfully() throws Exception {
 		// Mocking environment properties
 		when(env.getProperty(ResidentConstants.LOWER_LEFT_X)).thenReturn("10");
 		when(env.getProperty(ResidentConstants.LOWER_LEFT_Y)).thenReturn("20");
@@ -845,7 +845,7 @@ public class UtilityTest {
 	}
 
 	@Test
-	public void testSignPdfFailed() throws Exception {
+	public void should_returnNull_when_pdfSignatureFails() throws Exception {
 		// Mocking environment properties
 		when(env.getProperty(ResidentConstants.LOWER_LEFT_X)).thenReturn("10");
 		when(env.getProperty(ResidentConstants.LOWER_LEFT_Y)).thenReturn("20");
