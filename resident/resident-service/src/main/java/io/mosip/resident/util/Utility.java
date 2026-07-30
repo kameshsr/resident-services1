@@ -72,6 +72,8 @@ import java.io.Serializable;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.chrono.Chronology;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -614,7 +616,7 @@ public class Utility {
 	}
 
 	private String formatDateTimeForPattern(LocalDateTime localDateTime, String locale, String defaultDateTimePattern, int timeZoneOffset) {
-		return localDateTime == null ? null : formatToLocaleDateTime(locale, defaultDateTimePattern, localDateTime);
+		return localDateTime == null ? null : formatToLocaleDateTime(locale, defaultDateTimePattern, localDateTime, timeZoneOffset);
 	}
 
 	public String formatWithOffsetForUI(int timeZoneOffset, String locale, LocalDateTime localDateTime) {
@@ -629,7 +631,7 @@ public class Utility {
 		return localDateTime == null ? null : localDateTime.minusMinutes(timeZoneOffset); //Converting UTC to local time zone
 	}
 
-	private String formatToLocaleDateTime(String localeStr, String defaultDateTimePattern, LocalDateTime localDateTime) {
+	private String formatToLocaleDateTime(String localeStr, String defaultDateTimePattern, LocalDateTime localDateTime, int timeZoneOffset) {
 		Locale locale = null;
 		if (localeStr != null && !localeStr.isEmpty()) {
 			String[] localeElements = localeStr.replace('-', '_').split("_");
@@ -645,14 +647,17 @@ public class Utility {
 			locale = Locale.getDefault();
 		}
 
+		ZoneOffset offset = ZoneOffset.ofTotalSeconds(-timeZoneOffset * 60);
+		OffsetDateTime offsetDateTime = localDateTime.atOffset(offset);
+
 		if (locale != null) {
 			Chronology chronology = Chronology.ofLocale(locale);
 			DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf(formattingStyle)).withLocale(locale).withChronology(chronology);
-			String dateTime = localDateTime.format(formatter);
+			String dateTime = offsetDateTime.format(formatter);
 			return dateTime;
 		} else {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(defaultDateTimePattern);
-			String dateTime = localDateTime.format(formatter);
+			String dateTime = offsetDateTime.format(formatter);
 			return dateTime;
 		}
 	}
