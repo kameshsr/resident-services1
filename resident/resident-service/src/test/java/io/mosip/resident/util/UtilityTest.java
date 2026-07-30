@@ -734,25 +734,25 @@ public class UtilityTest {
 
 	@Test
 	public void test_formatWithOffsetForUI_en_IN_FULL() {
-		org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "FULL");
+		ReflectionTestUtils.setField(utility, "formattingStyle", "FULL");
 		try {
 			LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
 			String formatWithOffsetForFileName = utility.formatWithOffsetForUI(-330, "en-IN", localDateTime);
 			assertEquals("Saturday, 14 August, 1993, 10:24:00\u202Fpm +05:30", formatWithOffsetForFileName);
 		} finally {
-			org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "MEDIUM");
+			ReflectionTestUtils.setField(utility, "formattingStyle", "MEDIUM");
 		}
 	}
 
 	@Test
 	public void test_formatWithOffsetForUI_en_IN_LONG() {
-		org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "LONG");
+		ReflectionTestUtils.setField(utility, "formattingStyle", "LONG");
 		try {
 			LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
 			String formatWithOffsetForFileName = utility.formatWithOffsetForUI(-330, "en-IN", localDateTime);
 			assertEquals("14 August 1993, 10:24:00\u202Fpm +05:30", formatWithOffsetForFileName);
 		} finally {
-			org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "MEDIUM");
+			ReflectionTestUtils.setField(utility, "formattingStyle", "MEDIUM");
 		}
 	}
 
@@ -779,7 +779,7 @@ public class UtilityTest {
 
 	@Test
 	public void test_formatWithOffsetForUI_local_null() {
-		org.springframework.test.util.ReflectionTestUtils.invokeMethod(utility, "formatToLocaleDateTime", null, null, LocalDateTime.now(), 0);
+		ReflectionTestUtils.invokeMethod(utility, "formatToLocaleDateTime", null, null, LocalDateTime.now(), 0);
 	}
 
 	@Test
