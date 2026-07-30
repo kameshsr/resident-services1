@@ -733,7 +733,7 @@ public class UtilityTest {
 	}
 
 	@Test
-	public void test_formatWithOffsetForUI_en_IN_FULL() {
+	public void should_formatFullDateTime_when_enINOffsetIsMinus330Minutes() {
 		ReflectionTestUtils.setField(utility, "formattingStyle", "FULL");
 		try {
 			LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
@@ -745,7 +745,7 @@ public class UtilityTest {
 	}
 
 	@Test
-	public void test_formatWithOffsetForUI_en_IN_LONG() {
+	public void should_formatLongDateTime_when_enINOffsetIsMinus330Minutes() {
 		ReflectionTestUtils.setField(utility, "formattingStyle", "LONG");
 		try {
 			LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
@@ -779,7 +779,7 @@ public class UtilityTest {
 
 	@Test
 	public void test_formatWithOffsetForUI_local_null() {
-		ReflectionTestUtils.invokeMethod(utility, "formatToLocaleDateTime", null, null, LocalDateTime.now(), 0);
+		assertNotNull(ReflectionTestUtils.invokeMethod(utility, "formatToLocaleDateTime", null, null, LocalDateTime.now(), 0));
 	}
 
 	@Test
