@@ -422,11 +422,6 @@ public class Utilities {
 		}
 	}
 
-	public int getTotalNumberOfPageInPdf(ByteArrayOutputStream outputStream) throws IOException {
-		byte[] pdfBytes = outputStream.toByteArray();
-		return getPageCountWithPDDocument(pdfBytes);
-	}
-
 	public int getPageCountOfPdf(byte[] pdfBytes) throws IOException {
 		return getPageCountWithPDDocument(pdfBytes);
 	}
