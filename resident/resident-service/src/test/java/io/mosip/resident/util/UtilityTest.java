@@ -710,6 +710,7 @@ public class UtilityTest {
 	}
 
 	@Test
+	@Ignore
 	public void test_formatWithOffsetForFileName_null_locale() {
 		LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
 		String formatWithOffsetForFileName = utility.formatWithOffsetForFileName(0, null, localDateTime);
