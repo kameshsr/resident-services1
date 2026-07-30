@@ -710,7 +710,6 @@ public class UtilityTest {
 	}
 
 	@Test
-	@Ignore
 	public void test_formatWithOffsetForFileName_null_locale() {
 		LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
 		String formatWithOffsetForFileName = utility.formatWithOffsetForFileName(0, null, localDateTime);
@@ -730,6 +729,30 @@ public class UtilityTest {
 		LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
 		String formatWithOffsetForFileName = utility.formatWithOffsetForUI(-330, "en-IN", localDateTime);
 		assertEquals("14-Aug-1993, 10:24:00 pm", formatWithOffsetForFileName);
+	}
+
+	@Test
+	public void test_formatWithOffsetForUI_en_IN_FULL() {
+		org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "FULL");
+		try {
+			LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
+			String formatWithOffsetForFileName = utility.formatWithOffsetForUI(-330, "en-IN", localDateTime);
+			assertEquals("Saturday, 14 August, 1993, 10:24:00\u202Fpm +05:30", formatWithOffsetForFileName);
+		} finally {
+			org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "MEDIUM");
+		}
+	}
+
+	@Test
+	public void test_formatWithOffsetForUI_en_IN_LONG() {
+		org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "LONG");
+		try {
+			LocalDateTime localDateTime = LocalDateTime.of(1993, 8, 14, 16, 54);
+			String formatWithOffsetForFileName = utility.formatWithOffsetForUI(-330, "en-IN", localDateTime);
+			assertEquals("14 August 1993, 10:24:00\u202Fpm +05:30", formatWithOffsetForFileName);
+		} finally {
+			org.springframework.test.util.ReflectionTestUtils.setField(utility, "formattingStyle", "MEDIUM");
+		}
 	}
 
 	@Test
@@ -755,7 +778,7 @@ public class UtilityTest {
 
 	@Test
 	public void test_formatWithOffsetForUI_local_null() {
-		ReflectionTestUtils.invokeMethod(utility, "formatToLocaleDateTime", null, null, LocalDateTime.now());
+		org.springframework.test.util.ReflectionTestUtils.invokeMethod(utility, "formatToLocaleDateTime", null, null, LocalDateTime.now(), 0);
 	}
 
 	@Test

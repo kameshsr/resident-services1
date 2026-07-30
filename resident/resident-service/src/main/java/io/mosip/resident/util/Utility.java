@@ -648,16 +648,16 @@ public class Utility {
 		}
 
 		ZoneOffset offset = ZoneOffset.ofTotalSeconds(-timeZoneOffset * 60);
-		OffsetDateTime offsetDateTime = localDateTime.atOffset(offset);
+		java.time.ZonedDateTime zonedDateTime = localDateTime.atZone(offset);
 
 		if (locale != null) {
 			Chronology chronology = Chronology.ofLocale(locale);
 			DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.valueOf(formattingStyle)).withLocale(locale).withChronology(chronology);
-			String dateTime = offsetDateTime.format(formatter);
+			String dateTime = zonedDateTime.format(formatter);
 			return dateTime;
 		} else {
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern(defaultDateTimePattern);
-			String dateTime = offsetDateTime.format(formatter);
+			String dateTime = zonedDateTime.format(formatter);
 			return dateTime;
 		}
 	}
